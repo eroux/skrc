@@ -10,6 +10,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ## (like /w/index.php/Page_title to /wiki/Page_title) please see:
 ## http://www.mediawiki.org/wiki/Manual:Short_URL
 $wgScriptPath = "";
+$wgArticlePath = "/$1";
+$wgUsePathInfo = true;
 $wgScriptExtension = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs

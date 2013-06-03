@@ -7,6 +7,9 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 # Include of ServerSetting.php where Server Side settings are stored
 require_once("$IP/ServerSettings.php");
 
+# Register i18n file
+$wgExtensionMessagesFiles['LocalSettings'] = __DIR__ . '/LocalSettings.i18n.php';
+
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
@@ -72,17 +75,31 @@ $wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";
 # that value)
 $wgResourceLoaderMaxQueryLength = -1;
 
+
 # Permissions
+
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
 
-# Enabled Extensions.
+
+# Extensions
+
 require_once( "$IP/extensions/Cite/Cite.php" );
+
 require_once( "$IP/extensions/ImageMap/ImageMap.php" );
+
 require_once( "$IP/extensions/InputBox/InputBox.php" );
+
 require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
+
 require_once( "$IP/extensions/PdfHandler/PdfHandler.php" );
+
 require_once( "$IP/extensions/Poem/Poem.php" );
+
 require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" );
+
 require_once( "$IP/extensions/Vector/Vector.php" );
+
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
+
+require_once( "$IP/extensions/ReadAction/ReadAction.php" );
