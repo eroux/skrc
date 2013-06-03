@@ -81,6 +81,30 @@ $wgResourceLoaderMaxQueryLength = -1;
 $wgGroupPermissions['*']['createaccount'] = false;
 $wgGroupPermissions['*']['edit'] = false;
 
+$wgGroupPermissions['khenpo']['khenpo'] = true;
+
+$wgGroupPermissions['lama']['khenpo'] = true;
+$wgGroupPermissions['lama']['lama'] = true;
+
+$wgGroupPermissions['vajracarya']['khenpo'] = true;
+$wgGroupPermissions['vajracarya']['lama'] = true;
+$wgGroupPermissions['vajracarya']['vajracarya'] = true;
+
+$wgGroupPermissions['sysop']['khenpo'] = true;
+$wgGroupPermissions['sysop']['lama'] = true;
+$wgGroupPermissions['sysop']['vajracarya'] = true;
+
+# adds additional levels that can be selected on the 'page protection' page.
+# (default = "everyone", autoconfirmed and sysop)
+$wgRestrictionLevels[] = 'khenpo';
+$wgRestrictionLevels[] = 'lama';
+$wgRestrictionLevels[] = 'vajracarya';
+
+# customizes "autoconfirmed" group criteria with real criteria
+$wgAutoConfirmAge = 3600*24*5; // changes from 0 to 5 days
+$wgAutoConfirmCount = 10; // changes from 0 to 10 edits
+$wgAutopromote['autoconfirmed'][] = array( APCOND_EMAILCONFIRMED ); // new criteria
+
 
 # Extensions
 
