@@ -125,5 +125,12 @@ require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" )
 require_once( "$IP/extensions/Vector/Vector.php" );
 
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
+$wgWikiEditorFeatures['toolbar']['global'] = true;
+$wgWikiEditorFeatures['toolbar']['user'] = false;
+$wgWikiEditorFeatures['dialogs']['global'] = true;
+$wgWikiEditorFeatures['dialogs']['user'] = false;
+$wgWikiEditorFeatures['preview']['user'] = false;
+$wgWikiEditorFeatures['publish']['user'] = false;
+$wgWikiEditorFeatures['toc']['user'] = false;
 
 require_once( "$IP/extensions/ReadAction/ReadAction.php" );
