@@ -48,4 +48,5 @@ $wgHooks['getUserPermissionsErrors'][] = 'ReadAction::hookGetUserPermissionsErro
 $wgHooks['BeforeParserFetchTemplateAndtitle'][] = 'ReadAction::hookBeforeParserFetchTemplateAndtitle';
 $wgHooks['ArticleProtectComplete'][] = 'ReadAction::hookArticleProtectComplete';
 $wgHooks['SearchUpdate'][] = 'ReadAction::hookSearchUpdate';
-
+$wgHooks['UploadForm:initial'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks displaying form
+$wgHooks['UploadForm:BeforeProcessing'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks processing upload

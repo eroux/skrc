@@ -107,4 +107,37 @@ class ReadAction {
 		return $errors;
 	}
 
+	/**
+	 * Hooked to
+	 * <ul>
+	 * <li><b>UploadForm:initial</b> : called just before the upload form is generated</li>
+	 * <li><b>UploadForm:BeforeProcessing</b> : called just before the upload data are processed</li>
+	 * </ul>
+	 * Ensures that the user can "read" the MediaWiki page.
+	 * @param SpecialPage $specialUploadObj current SpecialUpload page object
+	 */
+	public static function hookUploadFormBeforeProcessing($specialUploadObj) {
+
+		$user = $specialUploadObj->getUser();
+		$request = $specialUploadObj->getRequest();
+
+		// instanciate the title
+		$fileTitleName = $request->getText(
+				'wpDestFileMainPart', $request->getText(
+						'wpDestFile', $request->getText(
+								'wpUploadFile', $request->getText(
+										'filename'
+		))));
+		$fileTitle = Title::newFromText($fileTitleName, NS_FILE);
+
+		// ensure user can read
+		$errors = $fileTitle->getUserPermissionsErrors('read', $user);
+		if (count($errors)) {
+			$specialUploadObj->getOutput()->showPermissionsErrorPage($errors);
+			return false; // break SpecialUpload page init/processing
+		}
+
+		return true; // continue hook processing
+	}
+
 }
