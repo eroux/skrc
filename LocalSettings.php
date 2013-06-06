@@ -75,35 +75,55 @@ $wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";
 # that value)
 $wgResourceLoaderMaxQueryLength = -1;
 
+# remove the link to the talk page for non-logged in users, because they won't be able to edit it
+$wgShowIPinHeader = false;
 
-# Permissions
 
-$wgGroupPermissions['*']['createaccount'] = false;
-$wgGroupPermissions['*']['edit'] = false;
+# Customizes core permissions
 
-$wgGroupPermissions['khenpo']['khenpo'] = true;
+$wgGroupPermissions['*']['createaccount'] = false; // only 'sysop' can
+$wgGroupPermissions['*']['edit'] = false; // only 'user' (authenticated) can
+$wgGroupPermissions['*']['createpage'] = false; // only 'user' (authenticated) can
+$wgGroupPermissions['*']['createtalk'] = false; // only 'user' (authenticated) can
+$wgGroupPermissions['*']['writeapi'] = false; // only 'user' (authenticated) can
+$wgGroupPermissions['bureaucrat']['createaccount'] = true;
 
-$wgGroupPermissions['lama']['khenpo'] = true;
+
+# Adds adherent's user groups, set relations and their restriction levels
+
+$wgGroupPermissions['khenpo']['khenpo'] = true; // ?
+
+$wgGroupPermissions['adherent']['adherent'] = true;
+
+$wgGroupPermissions['acarya']['adherent'] = true;
+$wgGroupPermissions['acarya']['acarya'] = true;
+
+$wgGroupPermissions['lama']['adherent'] = true;
+$wgGroupPermissions['lama']['acarya'] = true;
 $wgGroupPermissions['lama']['lama'] = true;
 
-$wgGroupPermissions['vajracarya']['khenpo'] = true;
+$wgGroupPermissions['vajracarya']['adherent'] = true;
+$wgGroupPermissions['vajracarya']['acarya'] = true;
 $wgGroupPermissions['vajracarya']['lama'] = true;
 $wgGroupPermissions['vajracarya']['vajracarya'] = true;
 
-$wgGroupPermissions['sysop']['khenpo'] = true;
+
+# Sysops can access all restriction levels
+
+$wgGroupPermissions['sysop']['khenpo'] = true; // ?
+$wgGroupPermissions['sysop']['adherent'] = true;
+$wgGroupPermissions['sysop']['acarya'] = true;
 $wgGroupPermissions['sysop']['lama'] = true;
 $wgGroupPermissions['sysop']['vajracarya'] = true;
 
-# adds additional levels that can be selected on the 'page protection' page.
-# (default = "everyone", autoconfirmed and sysop)
-$wgRestrictionLevels[] = 'khenpo';
+
+# Adds additional levels that can be selected on the 'page protection' page.
+# Default levels are ''(everyone), autoconfirmed and sysop
+$wgRestrictionLevels[] = 'khenpo'; // ?
+$wgRestrictionLevels[] = 'adherent';
+$wgRestrictionLevels[] = 'acarya';
 $wgRestrictionLevels[] = 'lama';
 $wgRestrictionLevels[] = 'vajracarya';
-
-# customizes "autoconfirmed" group criteria with real criteria
-$wgAutoConfirmAge = 3600*24*5; // changes from 0 to 5 days
-$wgAutoConfirmCount = 10; // changes from 0 to 10 edits
-$wgAutopromote['autoconfirmed'][] = array( APCOND_EMAILCONFIRMED ); // new criteria
 
 
 # Extensions
