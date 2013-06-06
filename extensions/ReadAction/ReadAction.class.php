@@ -17,7 +17,6 @@ class ReadAction {
 	 * the processing of the hook.
 	 */
 	public static function hookGetUserPermissionsErrors(&$title, &$user, $action, &$result) {
-		wfDebugLog('ReadAction', 'GetUserPermissionsErrors: "'.$action.'" for ' . $user->getName() . '" on "' . $title->getPrefixedDBkey() . '"');
 		if ($action == 'read') {
 			$error = self::checkPageReadRestrictions($title, $user);
 			if (count($error) > 0) {
@@ -91,9 +90,11 @@ class ReadAction {
 	 * @return array Array of error, empty if no restriction apply
 	 */
 	public static function checkPageReadRestrictions(&$title, &$user) {
-
 		wfDebugLog('ReadAction', 'check read for "' . $user->getName() . '" on "' . $title->getPrefixedDBkey() . '"');
-
+/*		if (strrpos($title->getPrefixedDBkey(), '!') !== false) {
+			wfDebugLog('ReadAction', wfBacktrace());
+		}
+*/
 		$errors = array();
 		foreach ($title->getRestrictions('read') as $right) {
 			if ($right == 'sysop') {
@@ -117,27 +118,53 @@ class ReadAction {
 	 * @param SpecialPage $specialUploadObj current SpecialUpload page object
 	 */
 	public static function hookUploadFormBeforeProcessing($specialUploadObj) {
+		// get the title of the file to be uploaded.
+		$fileTitle = $specialUploadObj->mUpload->getTitle();
+		if (!is_null($fileTitle)) {
 
-		$user = $specialUploadObj->getUser();
-		$request = $specialUploadObj->getRequest();
+			// ensure user can read
+			$user = $specialUploadObj->getUser();
+			$errors = $fileTitle->getUserPermissionsErrors('read', $user);
 
-		// instanciate the title
-		$fileTitleName = $request->getText(
-				'wpDestFileMainPart', $request->getText(
-						'wpDestFile', $request->getText(
-								'wpUploadFile', $request->getText(
-										'filename'
-		))));
-		$fileTitle = Title::newFromText($fileTitleName, NS_FILE);
-
-		// ensure user can read
-		$errors = $fileTitle->getUserPermissionsErrors('read', $user);
-		if (count($errors)) {
-			$specialUploadObj->getOutput()->showPermissionsErrorPage($errors);
-			return false; // break SpecialUpload page init/processing
+			if (count($errors)) {
+				$specialUploadObj->getOutput()->showPermissionsErrorPage($errors);
+				return false; // break SpecialUpload page init/processing
+			}
 		}
 
 		return true; // continue hook processing
+	}
+
+	/**
+	 * Makes sur the $title always point to the main title, and never to a fake
+	 * in case of an archive
+	 * @global type $wgContLang
+	 * @param Title $title
+	 * @param string $path
+	 * @param string $name
+	 * @param array $result
+	 * @return boolean
+	 * @todo To be implemented
+	 */
+	public static function hookImgAuthBeforeStream($title, $path, $name, $result) {
+		return true;
+		/*
+		 * Sample from http://www.mediawiki.org/wiki/Manual:Hooks/ImgAuthBeforeStream
+
+		global $wgContLang;
+
+		# See if stored in a NS path
+
+		$subdirs = explode('/', $path);
+		if (strlen($subdirs[1]) == 3 && is_numeric($subdirs[1]) && $subdirs[1] >= 100) {
+			$title = Title::makeTitleSafe(NS_FILE, $wgContLang->getNsText($subdirs[1]) . ":" . $name);
+			if (!$title instanceof Title) {
+				$result = array('img-auth-accessdenied', 'img-auth-badtitle', $name);
+				return false;
+			}
+		}
+		return true;
+		 */
 	}
 
 }

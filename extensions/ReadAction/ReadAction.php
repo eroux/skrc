@@ -50,3 +50,4 @@ $wgHooks['ArticleProtectComplete'][] = 'ReadAction::hookArticleProtectComplete';
 $wgHooks['SearchUpdate'][] = 'ReadAction::hookSearchUpdate';
 $wgHooks['UploadForm:initial'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks displaying form
 $wgHooks['UploadForm:BeforeProcessing'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks processing upload
+$wgHooks['ImgAuthBeforeStream'][] = 'ReadAction::hookImgAuthBeforeStream'; // modifies the title to always point to the real title 
