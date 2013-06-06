@@ -10,7 +10,7 @@ if (!defined('MEDIAWIKI'))
 
 // Adds the read right is in restricted actions list
 if (!in_array('read', $wgRestrictionTypes)) {
-	$wgRestrictionTypes[] = 'read';
+	array_unshift($wgRestrictionTypes, 'read'); // prepend at the first place
 }
 
 # Disable feeds, see http://www.mediawiki.org/wiki/Extension:PageSecurity#Disable_feeds
