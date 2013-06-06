@@ -9,7 +9,7 @@ if (!defined('MEDIAWIKI'))
  * @file
  * @ingroup Extensions
  * @author Seizam SàRL <contact@seizam.com>
- * @license Creative Commons Attribution Non-Commercial Share Alike.
+ * @license GNU General Public License version 3 or any later version <http://www.gnu.org/copyleft/gpl.html>
  */
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
