@@ -26,9 +26,11 @@ $wgDBserver = "localhost";
 $wgDBname = "skrc-db";
 $wgDBuser = "skrc-user";
 $wgDBpassword = "skrc-password";
+$wgDBprefix = ""; //MySQL
 
-# MySQL specific settings
-$wgDBprefix = "";
+## Install Keys
+$wgSecretKey = "8b96b177ed2e10473b77b8e07f3363f532380f761d77d12e9b9a0c8e43abf6fb";
+$wgUpgradeKey = "d71ad26d0f782ac1";
 
 # MySQL table options to use during installation or update
 $wgDBTableOptions = "ENGINE=InnoDB, DEFAULT CHARSET=binary";
@@ -45,6 +47,14 @@ $wgMemCachedServers = array();
 ## available UTF-8 locale
 $wgShellLocale = "en_US.utf8";
 
+## Uploads and images
+
+# Where are stored user files
+$wgUploadDirectory = '/srv/wiki/uploads';
+# Entry point for files
+$wgUploadPath = "$wgScriptPath/img_auth.php";
+
+$wgUseImageMagick = true;
 $wgImageMagickConvertCommand = "/usr/bin/convert";
 
 ## Set $wgCacheDirectory to a writable directory on the web server
@@ -55,5 +65,8 @@ $wgCacheDirectory = "/srv/wiki/cache";
 # Path to the GNU diff3 utility. Used for conflict resolution.
 $wgDiff3 = "/usr/bin/diff3";
 
-# Where are stored user files
-$wgUploadDirectory = '/srv/wiki/uploads';
+# Query string length limit for ResourceLoader. You should only set this if
+# your web server has a query string length limit (then set it to that limit),
+# or if you have suhosin.get.max_value_length set in php.ini (then set it to
+# that value)
+$wgResourceLoaderMaxQueryLength = -1;
