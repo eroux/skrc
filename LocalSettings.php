@@ -48,7 +48,7 @@ $wgUseInstantCommons = false;
 #$wgHashedUploadDirectory = false;
 
 # Site language code, should be one of the list in ./languages/Names.php
-$wgLanguageCode = "en-gb";
+$wgLanguageCode = "en";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
@@ -62,7 +62,8 @@ $wgRightsUrl = "http://creativecommons.org/licenses/by-nc-sa/3.0/";
 $wgRightsText = "Creative Commons Attribution Non-Commercial Share Alike";
 $wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";
 
-
+# remove the link to the talk page for non-logged in users, because they won't be able to edit it
+$wgShowIPinHeader = false;
 
 # Customizes core permissions
 
@@ -149,3 +150,21 @@ $wgWikiEditorFeatures['toc']['user'] = false;
 
 # Extends "read" right
 require_once( "$IP/extensions/ReadAction/ReadAction.php" );
+
+# =[ Polyglot ]= (auto select page version regarding user language)
+require_once( "$IP/extensions/PolyglotS/PolyglotS.php" );
+# Supported languages
+$wgPolyglotLanguages = null ;
+# Enable redirect on target page (eg. MainPage -> MainPage/fr -> Accueil)
+$wgPolyglotFollowRedirects = true;
+
+# =[ Language Selector ]= (auto select user language and drop down menu)
+require_once( "$IP/extensions/LanguageSelector/LanguageSelector.php" );
+# Supported languages
+$wgLanguageSelectorLanguages = array('bo','en','fr');
+# Displayed languages
+$wgLanguageSelectorLanguagesShorthand = array('bo','en','fr');
+# Method of language selection
+$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; #Automatic selection regarding browser
+# Where to put the language selection dropdown menu
+$wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; #Hard integrated for Skinzam
