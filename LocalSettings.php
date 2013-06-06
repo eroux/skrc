@@ -48,7 +48,7 @@ $wgUseInstantCommons = false;
 #$wgHashedUploadDirectory = false;
 
 # Site language code, should be one of the list in ./languages/Names.php
-$wgLanguageCode = "en-gb";
+$wgLanguageCode = "en";
 
 ## Default skin: you can change the default skin. Use the internal symbolic
 ## names, ie 'standard', 'nostalgia', 'cologneblue', 'monobook', 'vector':
@@ -159,12 +159,12 @@ $wgPolyglotLanguages = null ;
 $wgPolyglotFollowRedirects = true;
 
 # =[ Language Selector ]= (auto select user language and drop down menu)
-#require_once( "$IP/extensions/LanguageSelector/LanguageSelector.php" );
+require_once( "$IP/extensions/LanguageSelector/LanguageSelector.php" );
 # Supported languages
 $wgLanguageSelectorLanguages = array('bo','en','fr');
 # Displayed languages
-$wgLanguageSelectorLanguagesShorthand = array('en','fr');
+$wgLanguageSelectorLanguagesShorthand = array('bo','en','fr');
 # Method of language selection
-#$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; #Automatic selection regarding browser
+$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; #Automatic selection regarding browser
 # Where to put the language selection dropdown menu
-#$wgLanguageSelectorLocation = LANGUAGE_SELECTOR_MANUAL; #Hard integrated for Skinzam
+$wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; #Hard integrated for Skinzam
