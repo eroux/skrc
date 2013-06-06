@@ -93,24 +93,33 @@ $wgAutoConfirmCount = 10; // changes from 0 to 10 edits
 $wgAutopromote['autoconfirmed'][] = array( APCOND_EMAILCONFIRMED ); // new criteria
 
 
-# Extensions
+## Extensions
 
+# Citations
 require_once( "$IP/extensions/Cite/Cite.php" );
 
-require_once( "$IP/extensions/ImageMap/ImageMap.php" );
+# Clickable Images
+# require_once( "$IP/extensions/ImageMap/ImageMap.php" );
 
+# Forms
 require_once( "$IP/extensions/InputBox/InputBox.php" );
 
+# Advanced scipting in wikitext
 require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
 
+# Pdf Handler
 require_once( "$IP/extensions/PdfHandler/PdfHandler.php" );
 
+# <poem> tag
 require_once( "$IP/extensions/Poem/Poem.php" );
 
-require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" );
+# Code colorification
+# require_once( "$IP/extensions/SyntaxHighlight_GeSHi/SyntaxHighlight_GeSHi.php" );
 
+# Advanced skin features
 require_once( "$IP/extensions/Vector/Vector.php" );
 
+# Advanced editing interface
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 $wgWikiEditorFeatures['toolbar']['global'] = true;
 $wgWikiEditorFeatures['toolbar']['user'] = false;
@@ -120,4 +129,5 @@ $wgWikiEditorFeatures['preview']['user'] = false;
 $wgWikiEditorFeatures['publish']['user'] = false;
 $wgWikiEditorFeatures['toc']['user'] = false;
 
+# Extends "read" right
 require_once( "$IP/extensions/ReadAction/ReadAction.php" );
