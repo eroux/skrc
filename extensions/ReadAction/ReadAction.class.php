@@ -17,6 +17,7 @@ class ReadAction {
 	 * the processing of the hook.
 	 */
 	public static function hookGetUserPermissionsErrors(&$title, &$user, $action, &$result) {
+		wfDebugLog('ReadAction', 'GetUserPermissionsErrors: "'.$action.'" for ' . $user->getName() . '" on "' . $title->getPrefixedDBkey() . '"');
 		if ($action == 'read') {
 			$error = self::checkPageReadRestrictions($title, $user);
 			if (count($error) > 0) {
@@ -39,6 +40,7 @@ class ReadAction {
 	 */
 	public static function hookBeforeParserFetchTemplateAndtitle($parser, $title, &$skip, &$id) {
 		if ($title->isProtected('read')) {
+			wfDebugLog('ReadAction', 'page "'.$title->getPrefixedDBkey().'" is read protected, so cannot be transcluded');
 			$skip = true; // content not transcluded
 		}
 		return !$skip;
