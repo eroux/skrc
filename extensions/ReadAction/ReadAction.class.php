@@ -147,24 +147,32 @@ class ReadAction {
 	 * @todo To be implemented
 	 */
 	public static function hookImgAuthBeforeStream($title, $path, $name, $result) {
-		return true;
-		/*
-		 * Sample from http://www.mediawiki.org/wiki/Manual:Hooks/ImgAuthBeforeStream
+		// As written in LocalFile.php around line 1408
+		// * name for archived file is <timestamp of archiving>!<name>
+		//   $archiveName = wfTimestamp( TS_MW ) . '!'. $this->getName();
+		// * and archives are under 'archive' folder
+		//   $archiveRel = 'archive/' . $this->getHashPath() . $archiveName;
+		// * (and archive's thumbs under '/thumb/archive/')
+		if (( strpos($path, '/archive/') === 0 ) || ( strpos($path, '/thumb/archive/') === 0 )) {
 
-		global $wgContLang;
+			// identifies the real title name, as seen in ImagePage.php around line 1066
+			$exploded = explode('!', $name, 2);
+			if (isset($exploded[1])) { // this test is safer than unsing list()
 
-		# See if stored in a NS path
+				$name = $exploded[1];
 
-		$subdirs = explode('/', $path);
-		if (strlen($subdirs[1]) == 3 && is_numeric($subdirs[1]) && $subdirs[1] >= 100) {
-			$title = Title::makeTitleSafe(NS_FILE, $wgContLang->getNsText($subdirs[1]) . ":" . $name);
-			if (!$title instanceof Title) {
-				$result = array('img-auth-accessdenied', 'img-auth-badtitle', $name);
-				return false;
+				// instanciate the title the same way img_auth (around line 113) 
+				$title = Title::makeTitleSafe(NS_FILE, $name);
+				if ($title instanceof Title) {
+
+					return true; // ok
+				}
 			}
+
+			// generate the same error as img_auth in this case
+			$result = array('img-auth-accessdenied', 'img-auth-badtitle', 'raw' => $name);
+			return false;
 		}
 		return true;
-		 */
 	}
-
 }
