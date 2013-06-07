@@ -146,7 +146,7 @@ class ReadAction {
 	 * @return boolean
 	 * @todo To be implemented
 	 */
-	public static function hookImgAuthBeforeStream($title, $path, $name, $result) {
+	public static function hookImgAuthBeforeStreamArchive($title, $path, $name, $result) {
 		// As written in LocalFile.php around line 1408
 		// * name for archived file is <timestamp of archiving>!<name>
 		//   $archiveName = wfTimestamp( TS_MW ) . '!'. $this->getName();
@@ -175,4 +175,26 @@ class ReadAction {
 		}
 		return true;
 	}
+
+	/**
+	 * Makes sur the the user as sufficient rights to consult view deleted files
+	 * @global type $wgContLang
+	 * @param Title $title
+	 * @param string $path
+	 * @param string $name
+	 * @param array $result
+	 * @return boolean
+	 * @todo To be implemented
+	 */
+	public static function hookImgAuthBeforeStreamDeleted($title, $path, $name, $result) {
+		global $wgUser;
+
+		if (( strpos($path, '/deleted/') === 0 ) && (!$wgUser->isAllowed('deletedhistory') )) {
+			$result = array('img-auth-accessdenied', 'img-auth-noread', 'raw' => $name);
+			return false;
+		}
+
+		return true;
+	}
+
 }
