@@ -44,11 +44,15 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['ReadAction'] = __DIR__ . '/ReadAction.i18n.php';
 $wgAutoloadClasses['ReadAction'] = __DIR__ . '/ReadAction.class.php';
 
-$wgHooks['getUserPermissionsErrors'][] = 'ReadAction::hookGetUserPermissionsErrors';
-$wgHooks['BeforeParserFetchTemplateAndtitle'][] = 'ReadAction::hookBeforeParserFetchTemplateAndtitle';
-$wgHooks['ArticleProtectComplete'][] = 'ReadAction::hookArticleProtectComplete';
-$wgHooks['SearchUpdate'][] = 'ReadAction::hookSearchUpdate';
-$wgHooks['UploadForm:initial'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks displaying form
-$wgHooks['UploadForm:BeforeProcessing'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // blocks processing upload
+
+$wgHooks['getUserPermissionsErrors'][] = 'ReadAction::hookGetUserPermissionsErrorsRead'; // checks "read" is not protected
+$wgHooks['getUserPermissionsErrors'][] = 'ReadAction::hookGetUserPermissionsErrorsEdit'; // checks "read" for "edit" 
+$wgHooks['getUserPermissionsErrors'][] = 'ReadAction::hookGetUserPermissionsErrorsUpload'; // checks "edit" for "upload"
+$wgHooks['BeforeParserFetchTemplateAndtitle'][] = 'ReadAction::hookBeforeParserFetchTemplateAndtitle'; // do not transclude if "read" is protected
+$wgHooks['ArticleProtectComplete'][] = 'ReadAction::hookArticleProtectComplete'; // clears caches
+$wgHooks['SearchUpdate'][] = 'ReadAction::hookSearchUpdate'; // hides "read" protected pages
+
+$wgHooks['UploadForm:initial'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // checks the user can really upload
+$wgHooks['UploadForm:BeforeProcessing'][] = 'ReadAction::hookUploadFormBeforeProcessing'; // checks the user can really upload
 $wgHooks['ImgAuthBeforeStream'][] = 'ReadAction::hookImgAuthBeforeStreamArchive'; // modifies the title to always point to the real title
 $wgHooks['ImgAuthBeforeStream'][] = 'ReadAction::hookImgAuthBeforeStreamDeleted'; // checks rights as Special:Undelete does
