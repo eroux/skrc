@@ -167,3 +167,6 @@ $wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; #Hard integrated for
 
 # =[ Authorizations ]=
 require_once( "$IP/extensions/Authorizations/Authorizations.php" );
+
+# =[ Creator ]=
+require_once( "$IP/extensions/Creator/Creator.php" );
