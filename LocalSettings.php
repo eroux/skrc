@@ -77,9 +77,7 @@ $wgGroupPermissions['bureaucrat']['createaccount'] = true;
 
 # Adds adherent's user groups, set relations and their restriction levels
 
-$wgGroupPermissions['khenpo']['khenpo'] = true; // ?
-
-$wgGroupPermissions['adherent']['adherent'] = true;
+$wgGroupPermissions['user']['adherent'] = true;
 
 $wgGroupPermissions['acarya']['adherent'] = true;
 $wgGroupPermissions['acarya']['acarya'] = true;
@@ -96,7 +94,6 @@ $wgGroupPermissions['vajracarya']['vajracarya'] = true;
 
 # Sysops can access all restriction levels
 
-$wgGroupPermissions['sysop']['khenpo'] = true; // ?
 $wgGroupPermissions['sysop']['adherent'] = true;
 $wgGroupPermissions['sysop']['acarya'] = true;
 $wgGroupPermissions['sysop']['lama'] = true;
@@ -105,7 +102,6 @@ $wgGroupPermissions['sysop']['vajracarya'] = true;
 
 # Adds additional levels that can be selected on the 'page protection' page.
 # Default levels are ''(everyone), autoconfirmed and sysop
-$wgRestrictionLevels[] = 'khenpo'; // ?
 $wgRestrictionLevels[] = 'adherent';
 $wgRestrictionLevels[] = 'acarya';
 $wgRestrictionLevels[] = 'lama';
@@ -168,3 +164,6 @@ $wgLanguageSelectorLanguagesShorthand = array('bo','en','fr');
 $wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; #Automatic selection regarding browser
 # Where to put the language selection dropdown menu
 $wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; #Hard integrated for Skinzam
+
+# =[ Authorizations ]=
+require_once( "$IP/extensions/Authorizations/Authorizations.php" );
