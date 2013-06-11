@@ -144,29 +144,25 @@ $wgWikiEditorFeatures['preview']['user'] = false;
 $wgWikiEditorFeatures['publish']['user'] = false;
 $wgWikiEditorFeatures['toc']['user'] = false;
 
+# =[ ReadAction ]=
 # Extends "read" right
 require_once( "$IP/extensions/ReadAction/ReadAction.php" );
 
-# =[ Polyglot ]= (auto select page version regarding user language)
-require_once( "$IP/extensions/PolyglotS/PolyglotS.php" );
-# Supported languages
-$wgPolyglotLanguages = null ;
-# Enable redirect on target page (eg. MainPage -> MainPage/fr -> Accueil)
-$wgPolyglotFollowRedirects = true;
 
-# =[ Language Selector ]= (auto select user language and drop down menu)
+# =[ Language Selector ]=
+#Auto select user language and adds language selection menu
 require_once( "$IP/extensions/LanguageSelector/LanguageSelector.php" );
 # Supported languages
 $wgLanguageSelectorLanguages = array('bo','en','fr');
 # Displayed languages
 $wgLanguageSelectorLanguagesShorthand = array('bo','en','fr');
 # Method of language selection
-$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; #Automatic selection regarding browser
+$wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; # Automatic selection regarding browser
 # Where to put the language selection dropdown menu
-$wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; #Hard integrated for Skinzam
+$wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; # In the left toolbox
 
 # =[ Authorizations ]=
 require_once( "$IP/extensions/Authorizations/Authorizations.php" );
 
-# =[ Creator ]=
-require_once( "$IP/extensions/Creator/Creator.php" );
+# =[ OwnerRight ]=
+require_once( "$IP/extensions/OwnerRight/OwnerRight.php" );

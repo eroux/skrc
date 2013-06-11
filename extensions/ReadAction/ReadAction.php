@@ -21,6 +21,7 @@ $wgFeedCacheTimeout = 0; // Even enabled, no cache for feed
 $wgFeedDiffCutoff = 0; // No diff in RSS/Atom feed
 $wgAdvertisedFeedTypes = array(); // no feed
 
+// ===============================
 // END OF MEDIAWIKI CONFIGURATION SECTION
 
 

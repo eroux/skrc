@@ -1,6 +1,6 @@
 <?php
 
-class Creator {
+class OwnerRight {
 
 	/**
 	 * @param Title $title reference to the title in question (see the use in $IP/includes/Title.php)
@@ -15,9 +15,9 @@ class Creator {
 	public static function hookGetUserPermissionsErrors(&$title, &$user, $action, &$result) {
 
 		foreach ($title->getRestrictions($action) as $right) {
-			if (($right == 'creator') &&
-					( $user->isAnon() || (!self::isCreator($user, $title) && !$user->isAllowed('bypasscreator') ) )) {
-				$result = array(array('only-creator-can', $action));
+			if (($right == 'beowner') &&
+					( $user->isAnon() || (!self::isOwner($user, $title) && !$user->isAllowed('besuperowner') ) )) {
+				$result = array(array('only-owner-can', $action));
 				return false; // halt
 			}
 		}
@@ -31,12 +31,12 @@ class Creator {
 	 * @param Title $title
 	 * @return boolean
 	 */
-	public static function isCreator($user, $title) {
+	public static function isOwner($user, $title) {
 		$result = false;
-		if (wfRunHooks('isCreator', array($title, $user, &$result))) {
+		if (wfRunHooks('isOwner', array($title, $user, &$result))) {
 			$firstRevision = $title->getFirstRevision();
-			$creator = $firstRevision ? $firstRevision->getRawUser() : 0; // Fetch revision's user id
-			$result = $creator == $user->getId();
+			$owner = $firstRevision ? $firstRevision->getRawUser() : 0; // Fetch revision's user id
+			$result = $owner == $user->getId();
 		}
 		return $result;
 	}
