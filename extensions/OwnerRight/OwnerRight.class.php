@@ -3,6 +3,12 @@
 class OwnerRight {
 
 	/**
+	 * If a page has the BEOWNER restriction set, checks if the current user is the owner.
+	 * Note: By default, everybody has the BEOWNER right so that MW won't block it when checking rights elsewhere.
+	 * BUT we know that if a page is restricted to BEOWNER, it means we need to check if the current user is the owner.
+	 * THAT's what we do here.
+	 * Overriden if user has right BESUPEROWNER
+	 * 
 	 * @param Title $title reference to the title in question (see the use in $IP/includes/Title.php)
 	 * @param User $user reference to the current user (see the use in $IP/includes/Title.php)
 	 * @param string $action action concerning the title in question

@@ -13,18 +13,18 @@ if (!defined('MEDIAWIKI'))
  */
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
-	'name' => 'Authorizations',
-	'descriptionmsg' => 'authorizations-desc',
+	'name' => 'Preserve',
+	'descriptionmsg' => 'preserve-desc',
 	'version' => 0.1,
 	'author' => array('Seizam SàRL'),
 	'url' => 'http://atelier.seizam.com',
 );
 
-$wgExtensionMessagesFiles['Authorizations'] = __DIR__ . '/Authorizations.i18n.php';
-$wgAutoloadClasses['Authorizations'] = __DIR__ . '/Authorizations.class.php';
+$wgExtensionMessagesFiles['Preserve'] = __DIR__ . '/Preserve.i18n.php';
+$wgAutoloadClasses['Preserve'] = __DIR__ . '/Preserve.class.php';
 
 
-$wgHooks['xx'][] = 'Authorizations::hookXX'; 
+// $wgHooks['xx'][] = 'Preserve::hookXX'; 
 
-$wgHooks['MediaWikiPerformAction'][] = 'Authorizations::hookMediaWikiPerformAction';
-$wgHooks['SkinTemplateNavigation'][] = 'Authorizations::hookSkinTemplateNavigation';
+$wgHooks['MediaWikiPerformAction'][] = 'Preserve::hookMediaWikiPerformAction';
+$wgHooks['SkinTemplateNavigation'][] = 'Preserve::hookSkinTemplateNavigation';

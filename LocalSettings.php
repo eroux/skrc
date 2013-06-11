@@ -162,7 +162,7 @@ $wgLanguageSelectorDetectLanguage = LANGUAGE_SELECTOR_PREFER_CLIENT_LANG; # Auto
 $wgLanguageSelectorLocation = LANGUAGE_SELECTOR_AS_PORTLET; # In the left toolbox
 
 # =[ Authorizations ]=
-require_once( "$IP/extensions/Authorizations/Authorizations.php" );
+require_once( "$IP/extensions/Preserve/Preserve.php" );
 
 # =[ OwnerRight ]=
 require_once( "$IP/extensions/OwnerRight/OwnerRight.php" );

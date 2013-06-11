@@ -1,8 +1,8 @@
 <?php
 
-class Authorizations extends HTMLForm {
+class Preserve extends HTMLForm {
 
-	public static $ACTION = 'authorizations';
+	public static $ACTION = 'preserve';
 
 	/**
 	 * 
@@ -13,17 +13,17 @@ class Authorizations extends HTMLForm {
 
 		$this->setTitle($title);
 		$this->setAction($title->getLocalURL('action=' . self::$ACTION));
-		$this->addHeaderText(wfMessage('authorizations-headertext')->parse());
-		$this->setMessagePrefix('authorizations');
+		$this->addHeaderText(wfMessage('preserve-headertext')->parse());
+		$this->setMessagePrefix('preserve');
 		$this->setSubmitCallback(array($this, 'processForm'));
-		$this->setSubmitText(wfMessage('authorizations-submittext')->text());
+		$this->setSubmitText(wfMessage('preserve-submittext')->text());
 	}
 
 	/**
 	 * Process the submitted form.
 	 */
 	public function processForm() {
-		wfDebugLog('Authorizations', 'processForm()');
+		wfDebugLog('Preserve', 'processForm()');
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Authorizations extends HTMLForm {
 	}
 
 	/**
-	 * Adds the authorizations action.
+	 * Adds the Preserve action.
 	 * @param SkinTemplate $skinTemplate
 	 * @param array $links
 	 * @return boolean
@@ -73,7 +73,7 @@ class Authorizations extends HTMLForm {
 			global $wgRequest;
 			$links['actions'][self::$ACTION] = array(
 				'class' => ( $wgRequest->getVal('action') == self::$ACTION) ? 'selected' : '',
-				'text' => wfMessage('authorizations-actiontext')->text(),
+				'text' => wfMessage('preserve-actiontext')->text(),
 				'href' => $title->getLocalURL('action=' . self::$ACTION)
 			);
 		}
@@ -100,7 +100,7 @@ class Authorizations extends HTMLForm {
 			return true;
 		}
 
-		$form = new Authorizations($title);
+		$form = new Preserve($title);
 		$form->show();
 
 		return false;
