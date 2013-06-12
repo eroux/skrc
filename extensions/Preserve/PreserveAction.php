@@ -24,9 +24,12 @@ class PreserveAction extends FormAction {
 		$formDescriptor = array();
 
 		$title = $this->getTitle();
-		global $wgRestrictionLevels;
-
-		foreach ($title->getRestrictionTypes() as $action) {
+		
+		global $wgRestrictionLevels, $wgPreserveRestrictionLevels, $wgPreserveRestrictionTypes;
+		$restrictionTypes = array_intersect($wgPreserveRestrictionTypes, $title->getRestrictionTypes());
+		$restrictionLevels = array_intersect($wgPreserveRestrictionLevels, $wgRestrictionLevels);
+		
+		foreach ($restrictionTypes as $action) {
 
 			$formDescriptor[$action] = array(
 				'type' => 'radio',
@@ -34,7 +37,7 @@ class PreserveAction extends FormAction {
 				'options' => array()
 			);
 
-			foreach ($wgRestrictionLevels as $level) {
+			foreach ($restrictionLevels as $level) {
 				$formDescriptor[$action]['options'][$this->getRestrictionLevelText($level)] = $level;
 			}
 

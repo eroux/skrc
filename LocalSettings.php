@@ -115,10 +115,18 @@ $wgRestrictionLevels = array(
 	'sysop'
 );
 
-# Configures the 'beowner' restriction level
-$wgOwnerLevels = array('beowner' => 'besuperowner');
-$wgGroupPermissions['*']['beowner'] = true;
-$wgGroupPermissions['sysop']['besuperowner'] = true;
+# Sets restriction levels available on the preserve action page
+$wgPreserveRestrictionLevels = array(
+	'', // everyone
+	'adherent',
+	'acarya',
+	'lama',
+	'vajracarya',
+);
+
+# Sets restriction types available on the preserve action page
+$wgPreserveRestrictionTypes = array ( 'read', 'edit', 'upload');
+
 
 # Grants to page's owner access to the preserve action (and sysops the bypass right)
 $wgOwnerActions = array('preserve' => 'preserveany');

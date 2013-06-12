@@ -6,6 +6,15 @@ if (!defined('MEDIAWIKI'))
 // Adds the action preserve
 $wgActions['preserve'] = true;
 
+if (!isset($wgPreserveRestrictionTypes)) {
+	$wgPreserveRestrictionTypes = $wgRestrictionTypes;
+}
+
+if (!isset($wgPreserveRestrictionLevels)) {
+	$wgPreserveRestrictionLevels = $wgRestrictionLevels;
+}
+
+
 /**
  * Enables a regular user to preserve resources of other people's actions.
  *

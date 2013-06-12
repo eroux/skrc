@@ -7,7 +7,7 @@ if (!defined('MEDIAWIKI'))
 // =====================
 
 if (!isset($wgOwnerLevels)) {
-	$wgOwnerLevels = array('beowner' => 'besuperowner');
+	$wgOwnerLevels = array();
 }
 
 if (!isset($wgOwnerActions)) {
