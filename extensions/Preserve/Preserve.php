@@ -3,8 +3,11 @@
 if (!defined('MEDIAWIKI'))
 	die();
 
+// Adds the action preserve
+$wgActions['preserve'] = true;
+
 /**
- * Enables a regular user to specify the authorizations of a page.
+ * Enables a regular user to preserve resources of other people's actions.
  *
  * @file
  * @ingroup Extensions
@@ -21,10 +24,6 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgExtensionMessagesFiles['Preserve'] = __DIR__ . '/Preserve.i18n.php';
-$wgAutoloadClasses['Preserve'] = __DIR__ . '/Preserve.class.php';
+$wgAutoloadClasses['PreserveAction'] = __DIR__ . '/PreserveAction.php';
 
-
-// $wgHooks['xx'][] = 'Preserve::hookXX'; 
-
-$wgHooks['MediaWikiPerformAction'][] = 'Preserve::hookMediaWikiPerformAction';
-$wgHooks['SkinTemplateNavigation'][] = 'Preserve::hookSkinTemplateNavigation';
+$wgHooks['SkinTemplateNavigation'][] = 'PreserveAction::hookSkinTemplateNavigation'; // adds the preserve action link

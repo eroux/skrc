@@ -72,6 +72,9 @@ $wgGroupPermissions['*']['edit'] = false; // only 'user' (authenticated) can
 $wgGroupPermissions['*']['createpage'] = false; // only 'user' (authenticated) can
 $wgGroupPermissions['*']['createtalk'] = false; // only 'user' (authenticated) can
 $wgGroupPermissions['*']['writeapi'] = false; // only 'user' (authenticated) can
+
+$wgGroupPermissions['*']['preserve'] = true; // THIS LINE MAY BE REMOVED LATER
+
 $wgGroupPermissions['bureaucrat']['createaccount'] = true;
 
 
