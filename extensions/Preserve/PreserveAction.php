@@ -26,26 +26,44 @@ class PreserveAction extends FormAction {
 		$title = $this->getTitle();
 		global $wgRestrictionLevels;
 
-		foreach ($title->getRestrictionTypes() as $type) {
+		foreach ($title->getRestrictionTypes() as $action) {
 
-			$formDescriptor[$type] = array(
+			$formDescriptor[$action] = array(
 				'type' => 'radio',
-				'label' => $type,
+				'label-message' => 'restriction-' . $action,
 				'options' => array()
 			);
 
 			foreach ($wgRestrictionLevels as $level) {
-				$formDescriptor[$type]['options'][$level] = $level;
+				$formDescriptor[$action]['options'][$this->getRestrictionLevelText($level)] = $level;
 			}
 
 			// Pull the actual restriction from the DB (seen in ProtectionForm.php around line 98)
 			// Currently, MediaWiki "protect" action form requires individual selections,
 			// but the db allows multiples separated by commas.
 			// This reproduce the same behavior.
-			$formDescriptor[$type]['default'] = implode('', $title->getRestrictions($type));
+			$formDescriptor[$action]['default'] = implode('', $title->getRestrictions($action));
 		}
 
 		return $formDescriptor;
+	}
+
+	/**
+	 * Prepare the label for a protection selector option
+	 *
+	 * @param string $level A restriction level
+	 * @return string
+	 */
+	protected function getRestrictionLevelText($level) {
+		if ($level == '') {
+			return wfMessage('protect-default')->parse();
+		} else {
+			$msg = wfMessage("protect-level-{$level}");
+			if ($msg->exists()) {
+				return $msg->parse();
+			}
+			return wfMessage('protect-fallback', $level)->parse();
+		}
 	}
 
 	protected function alterForm(HTMLForm $form) {
@@ -55,12 +73,19 @@ class PreserveAction extends FormAction {
 	}
 
 	public function onSubmit($data) {
-		wfDebugLog('Preserve', 'onSubmit()');
-		return true;
+		wfDebugLog('Preserve', "onSubmit() \n\$data = " . print_r($data, true));
+		// Update the article's restriction field, and leave a log entry.
+		//  array "set of restriction keys"
+		//  array "expiry per restriction type expiration"
+		//  int "Set to false if cascading protection isn't allowed"
+		//  string "reason"
+		//  User "The user updating the restrictions"
+		// return Status::newFatal( 'readonlytext', wfReadOnlyReason() );
+		$cascade = false; // necessary because this parameter is passed by reference
+		return $this->page->doUpdateRestrictions($data, array(), $cascade, 'Preserve', $this->getUser());
 	}
 
 	public function onSuccess() {
-		wfDebugLog('Preserve', 'onSuccess()');
 		$this->getOutput()->addWikiMsg('preserve-success', $this->getTitle()->getText());
 		$this->getOutput()->returnToMain(false, $this->getTitle());
 	}
