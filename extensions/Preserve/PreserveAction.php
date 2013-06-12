@@ -30,6 +30,7 @@ class PreserveAction extends FormAction {
 
 			$formDescriptor[$action] = array(
 				'type' => 'radio',
+				'section' => 'section-' . $action,
 				'label-message' => 'restriction-' . $action,
 				'options' => array()
 			);
