@@ -3,28 +3,56 @@
 if (!defined('MEDIAWIKI'))
 	die();
 
-// MEDIAWIKI CONFIGURATION SECTION
-// ===============================
-// The next lines must not be overridden by LocalSettings or other extensions.
-// This MediaWiki configuration is necessary to ensure this extension works properly.
+// CONFIGURATION SECTION
+// =====================
 
-// Adds the beowner level is in level restriction list
-// Restriction levels should be user groups, but in the core they are treated as rights.
-// We therefore create the RIGHT (= action) "beowner" (Be Owner)
-if (!in_array('beowner', $wgRestrictionLevels)) {
-	$wgRestrictionLevels[] = 'beowner'; // append at the end
+if (!isset($wgOwnerLevels)) {
+	$wgOwnerLevels = array('beowner' => 'besuperowner');
 }
 
-// Everyone can be an owner
-// but in absolute terms, this should granted to the same group as rights 'createpage' and 'createtalk'.
-$wgGroupPermissions['*']['beowner'] = true;
-// this extension raises error for actions restricted to THE owner of a resource, except for sysops who have the besuperowner right
-$wgGroupPermissions['sysop']['besuperowner'] = true;
-
-// END OF MEDIAWIKI CONFIGURATION SECTION
+if (!isset($wgOwnerActions)) {
+	$wgOwnerActions = array();
+}
 
 /**
- * Implements a "creator" restriction level.
+ * CONFIGURATION EXAMPLES
+ * 
+ * 
+ * Add a new restriction level 'beowner' (in the protect form),
+ * desginating only the owner of each page,
+ * that sysops can bypass
+ * 
+ *   // Declares the owner level in this extension, with its bypass right
+ *   $wgOwnerLevels = array('beowner', 'besuperowner');
+ * 
+ *   // Adds the new level to the protect form
+ *   $wgRestrictionLevels[] = 'beowner';
+ * 
+ *   // Everyone can "be (THE) owner", but this extension now filter this level on each page to the real owner
+ *   $wgGroupPermissions['*']['beowner'] = true;
+ * 
+ *   // Sysops bypass
+ *   $wgGroupPermissions['sysop']['besuperowner'] = true;
+ * 
+ * 
+ * Grant each page's owner the 'protect' right,
+ * and sysops can still 'protect' any page
+ * 
+ *   // Only owner can 'protect', except for users having 'protectany' right
+ *   $wgOwnerActions = array('protect' => 'protectany'); 
+ * 
+ *   // Everyone can 'protect', but this extension now filter on each page to the real owner
+ *   $wgGroupPermissions['*']['protect'] = true;            
+ * 
+ *   // Sysops bypass
+ *   $wgGroupPermissions['sysop']['protectany'] = true
+ * 
+ */
+
+// END OF CONFIGURATION SECTION
+
+/**
+ * Makes some restriction levels and actions limited to the owner.
  * @file
  * @ingroup Extensions
  * @author Seizam SàRL <contact@seizam.com>
@@ -42,4 +70,5 @@ $wgExtensionCredits['other'][] = array(
 $wgExtensionMessagesFiles['OwnerRight'] = __DIR__ . '/OwnerRight.i18n.php';
 $wgAutoloadClasses['OwnerRight'] = __DIR__ . '/OwnerRight.class.php';
 
-$wgHooks['getUserPermissionsErrors'][] = 'OwnerRight::hookGetUserPermissionsErrors'; 
+$wgHooks['getUserPermissionsErrors'][] = 'OwnerRight::hookGetUserPermissionsErrorsCheckRestrictions';
+$wgHooks['getUserPermissionsErrors'][] = 'OwnerRight::hookGetUserPermissionsErrorsCheckAction';

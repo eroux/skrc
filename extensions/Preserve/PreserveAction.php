@@ -73,7 +73,7 @@ class PreserveAction extends FormAction {
 	}
 
 	public function onSubmit($data) {
-		wfDebugLog('Preserve', "onSubmit() \n\$data = " . print_r($data, true));
+		wfDebugLog('Preserve', 'onSubmit() (' . implode(', ', array_keys($data)) .') = ('.  implode(', ',$data).')');
 		// Update the article's restriction field, and leave a log entry.
 		//  array "set of restriction keys"
 		//  array "expiry per restriction type expiration"
@@ -86,6 +86,7 @@ class PreserveAction extends FormAction {
 	}
 
 	public function onSuccess() {
+		wfDebugLog('Preserve', 'onSuccess()');
 		$this->getOutput()->addWikiMsg('preserve-success', $this->getTitle()->getText());
 		$this->getOutput()->returnToMain(false, $this->getTitle());
 	}
