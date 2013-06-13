@@ -234,13 +234,18 @@ class ReadAction {
 	 */
 	public static function checkPageReadRestrictions(&$title, &$user) {
 		$errors = array();
-		foreach ($title->getRestrictions('read') as $right) {
-			if ($right == 'sysop') {
-				$right = 'protect'; // Backwards compatibility, rewrite sysop -> protect
+
+		if (wfRunHooks('checkPageReadRestrictions', array($title, $user, &$errors))) {
+
+			foreach ($title->getRestrictions('read') as $right) {
+				if ($right == 'sysop') {
+					$right = 'protect'; // Backwards compatibility, rewrite sysop -> protect
+				}
+				if ($right != '' && !$user->isAllowed($right)) {
+					$errors[] = array('readaction-restricted', $right);
+				}
 			}
-			if ($right != '' && !$user->isAllowed($right)) {
-				$errors[] = array('readaction-restricted', $right);
-			}
+
 		}
 
 		wfDebugLog('ReadAction', 'checks read restriction for "' . $user->getName() . '" on "' . $title->getPrefixedDBkey() . '" : ' . (count($errors) > 0 ? 'NOT ALLOWED' : 'OK'));

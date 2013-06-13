@@ -14,6 +14,7 @@ $messages['en'] = array(
 	'preserve-action' => 'Preserve',
 	'action-preserve' => 'set actions permissions of this page', // in the sentence "You do not have permission to X"
 	'preserve-header' => 'You can preserve this resource using this simple form.',
+	'preserve-wrapunsetonly' => '\'\'\'$1\'\'\'', 
 	'preserve-submit' => 'Save!',
 	'preserve-success' => 'The configuration has been saved.'
 );

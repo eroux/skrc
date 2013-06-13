@@ -7,13 +7,20 @@ if (!defined('MEDIAWIKI'))
 $wgActions['preserve'] = true;
 
 if (!isset($wgPreserveRestrictionTypes)) {
-	$wgPreserveRestrictionTypes = $wgRestrictionTypes;
+	$wgPreserveRestrictionTypes = true; // true means "= $wgRestrictionTypes" OR array( 'edit', 'upload', ...)
 }
 
 if (!isset($wgPreserveRestrictionLevels)) {
-	$wgPreserveRestrictionLevels = $wgRestrictionLevels;
+	$wgPreserveRestrictionLevels = true; // true means "= $wgRestrictionLevels" OR array( '', 'autoconfirmed', ...)
 }
 
+if (!isset($wgPreserveShowAllLevels)) {
+	 $wgPreserveShowAllLevels = true; // true OR false
+}
+
+if (!isset($wgPreserveEnableDisallowedLevels)) {
+	$wgPreserveEnableDisallowedLevels = true; // true OR false OR array ( 'sysop', ...)
+}
 
 /**
  * Enables a regular user to preserve resources of other people's actions.

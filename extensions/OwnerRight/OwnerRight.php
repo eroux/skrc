@@ -14,6 +14,10 @@ if (!isset($wgOwnerActions)) {
 	$wgOwnerActions = array();
 }
 
+if (!isset($wgOwnerCanAlwaysRead)) {
+	$wgOwnerCanAlwaysRead = true;
+}
+
 /**
  * CONFIGURATION EXAMPLES
  * 
@@ -23,7 +27,7 @@ if (!isset($wgOwnerActions)) {
  * that sysops can bypass
  * 
  *   // Declares the owner level in this extension, with its bypass right
- *   $wgOwnerLevels = array('beowner', 'besuperowner');
+ *   $wgOwnerLevels = array('beowner' => 'besuperowner');
  * 
  *   // Adds the new level to the protect form
  *   $wgRestrictionLevels[] = 'beowner';
@@ -72,3 +76,7 @@ $wgAutoloadClasses['OwnerRight'] = __DIR__ . '/OwnerRight.class.php';
 
 $wgHooks['getUserPermissionsErrors'][] = 'OwnerRight::hookGetUserPermissionsErrorsCheckRestrictions';
 $wgHooks['getUserPermissionsErrors'][] = 'OwnerRight::hookGetUserPermissionsErrorsCheckAction';
+
+if ($wgOwnerCanAlwaysRead) {
+	$wgHooks['checkPageReadRestrictions'][] = 'OwnerRight::hookCheckPageReadRestrictions'; // owner can always read
+}
