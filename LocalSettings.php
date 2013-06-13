@@ -103,6 +103,12 @@ $wgGroupPermissions['sysop']['lama'] = true;
 $wgGroupPermissions['sysop']['vajracarya'] = true;
 
 
+// Configure a owner restriction level, with its bypass for sysops
+$wgOwnerLevels = array('owner' => 'superowner');
+$wgGroupPermissions['*']['owner'] = true;
+$wgGroupPermissions['sysop']['superowner'] = true;
+
+
 # Adds additional levels that can be selected on the 'page protection' page.
 # Default levels are ''(everyone), autoconfirmed and sysop
 $wgRestrictionLevels = array(
@@ -111,18 +117,31 @@ $wgRestrictionLevels = array(
 	'acarya',
 	'lama',
 	'vajracarya',
-	'beowner', // only the owner of the page
+	'owner', // only the owner of the page
 	'sysop'
 );
 
-# Configures the 'beowner' restriction level
-$wgOwnerLevels = array('beowner' => 'besuperowner');
-$wgGroupPermissions['*']['beowner'] = true;
-$wgGroupPermissions['sysop']['besuperowner'] = true;
+# Sets restriction levels available on the preserve action page
+$wgPreserveRestrictionLevels = array(
+	'', // everyone
+	'adherent',
+	'acarya',
+	'lama',
+	'vajracarya',
+	'owner', // only the owner of the page
+);
+
+# Sets restriction types available on the preserve action page
+$wgPreserveRestrictionTypes = array ( 'read', 'edit', 'upload');
+
+$wgPreserveShowAllLevels = true;
+
+$wgPreserveEnableDisallowedLevels = false;
+
 
 # Grants to page's owner access to the preserve action (and sysops the bypass right)
-$wgOwnerActions = array('preserve' => 'preserveany');
 $wgGroupPermissions['*']['preserve'] = true;
+$wgOwnerActions = array('preserve' => 'preserveany');
 $wgGroupPermissions['sysop']['preserveany'] = true;
 
 

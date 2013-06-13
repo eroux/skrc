@@ -56,6 +56,21 @@ class OwnerRight {
 	}
 
 	/**
+	 * 
+	 * @param Title $title
+	 * @param User $user
+	 * @param array $errors
+	 * @return boolean
+	 */
+	public static function hookCheckPageReadRestrictions($title, $user, &$errors) {
+		if (OwnerRight::isOwner($user, $title)) {
+			$errors = array();
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * @param Title $title
 	 * @param User $user
 	 * @param string $do Action or restriction level

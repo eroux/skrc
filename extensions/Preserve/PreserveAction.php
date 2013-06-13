@@ -3,6 +3,15 @@
 class PreserveAction extends FormAction {
 
 	protected static $ACTION = 'preserve';
+	
+	protected $restrictionLevels;
+	protected $restrictionTypes;
+
+	protected function __construct($page, $context = null) {
+		parent::__construct($page, $context);
+		$this->restrictionLevels = null;
+		$this->restrictionTypes = null;
+	}
 
 	public function getName() {
 		return self::$ACTION;
@@ -20,33 +29,122 @@ class PreserveAction extends FormAction {
 		return '';
 	}
 
+	protected function getSelectableRestrictionLevels() {
+		if ($this->restrictionLevels == null) {
+
+			global $wgRestrictionLevels, $wgPreserveRestrictionLevels, $wgPreserveShowAllLevels;
+
+			if ($wgPreserveRestrictionLevels === true) {
+				$this->restrictionLevels = $wgRestrictionLevels;
+			} else {
+				$this->restrictionLevels = array_intersect($wgPreserveRestrictionLevels, $wgRestrictionLevels);
+			}
+
+			$user = $this->getUser();
+
+			if (!$wgPreserveShowAllLevels) {
+				// seen in ProtectionForm.php buildSelector() around line 565
+				// don't let them choose levels above their own (aka so they can still unprotect and edit the page)
+				foreach ($this->restrictionLevels as $key => $level) {
+					// seen in ProtectionForm.php buildSelector() around line 565
+					// don't let them choose levels above their own (aka so they can still unprotect and edit the page)
+					if ($level == 'sysop') {
+						//special case, rewrite sysop to protect and editprotected
+						if ($user->isAllowedAny('protect', 'editprotected'))
+							continue;
+					} else {
+						if ($user->isAllowed($level))
+							continue;
+					}
+					// hide the level
+					unset($this->restrictionLevels[$key]);
+				}
+			}
+		}
+
+		return $this->restrictionLevels;
+	}
+
+	protected function getAllRestrictionTypes() {
+		return $this->getTitle()->getRestrictionTypes();
+	}
+
+	protected function getVisibleRestrictionTypes() {
+		if ($this->restrictionTypes == null) {
+
+			global $wgPreserveRestrictionTypes;
+
+			if ($wgPreserveRestrictionTypes === true) {
+				$this->restrictionTypes = $this->getAllRestrictionTypes();
+			} else {
+				$this->restrictionTypes = array_intersect($wgPreserveRestrictionTypes, $this->getAllRestrictionTypes());
+			}
+
+		}
+		return $this->restrictionTypes;
+	}
+
+	protected function getActionRestriction($action) {
+		// Pull the actual restriction from the DB (seen in ProtectionForm.php around line 98)
+		// Currently, MediaWiki "protect" action form requires individual selections,
+		// but the db allows multiples separated by commas.
+		// This reproduce the same behavior.
+		return implode('', $this->getTitle()->getRestrictions($action));
+	}
+
+	protected function getAllRestrictions() {
+		$restrictions = array();
+		foreach($this->getAllRestrictionTypes() as $action) {
+			$restrictions[$action] = $this->getActionRestriction($action);
+		}
+		return $restrictions;
+	}
+
 	protected function getFormFields() {
 		$formDescriptor = array();
 
-		$title = $this->getTitle();
-		global $wgRestrictionLevels;
-
-		foreach ($title->getRestrictionTypes() as $action) {
-
-			$formDescriptor[$action] = array(
-				'type' => 'radio',
-				'section' => 'section-' . $action,
-				'label-message' => 'restriction-' . $action,
-				'options' => array()
-			);
-
-			foreach ($wgRestrictionLevels as $level) {
-				$formDescriptor[$action]['options'][$this->getRestrictionLevelText($level)] = $level;
-			}
-
-			// Pull the actual restriction from the DB (seen in ProtectionForm.php around line 98)
-			// Currently, MediaWiki "protect" action form requires individual selections,
-			// but the db allows multiples separated by commas.
-			// This reproduce the same behavior.
-			$formDescriptor[$action]['default'] = implode('', $title->getRestrictions($action));
+		foreach ($this->getVisibleRestrictionTypes() as $action) {
+			$formDescriptor[$action] = $this->getActionField($action);
 		}
 
 		return $formDescriptor;
+	}
+
+	protected function getActionField($action) {
+
+		$fieldDescriptor = array(
+			'type' => 'radio',
+			'label-message' => 'restriction-' . $action,
+			'options' => array()
+		);
+
+		$currentLevel = $this->getActionRestriction($action);
+		$fieldDescriptor['default'] = $currentLevel;
+
+		$restrictionLevels = $this->getSelectableRestrictionLevels();
+
+		global $wgPreserveEnableDisallowedLevels;
+
+		$currentLevelCanBeSet = in_array($currentLevel, $restrictionLevels);
+
+		if ( $currentLevelCanBeSet || ($wgPreserveEnableDisallowedLevels === true) || ( is_array($wgPreserveEnableDisallowedLevels) && in_array($currentLevel, $wgPreserveEnableDisallowedLevels) ) )  {
+			// we add selectable radios for all restriction levels
+			foreach ($restrictionLevels as $level) {
+				$fieldDescriptor['options'][$this->getRestrictionLevelText($level)] = $level;
+			}
+			if (!$currentLevelCanBeSet) {
+				// we add the current level, which is not displayed by default
+				$fieldDescriptor['options'][$this->getRestrictionLevelText($currentLevel, true)] = $currentLevel;
+			}
+
+		} else {
+			// we only add one disabled radio
+			$fieldDescriptor['options'][$this->getRestrictionLevelText($currentLevel)] = $currentLevel;
+			$fieldDescriptor['disabled'] = true;
+
+		}
+
+		return $fieldDescriptor;
 	}
 
 	/**
@@ -55,16 +153,19 @@ class PreserveAction extends FormAction {
 	 * @param string $level A restriction level
 	 * @return string
 	 */
-	protected function getRestrictionLevelText($level) {
+	protected function getRestrictionLevelText($level, $canUnsetOnly = false) {
 		if ($level == '') {
-			return wfMessage('protect-default')->parse();
+			$msg = wfMessage('protect-default');
 		} else {
 			$msg = wfMessage("protect-level-{$level}");
-			if ($msg->exists()) {
-				return $msg->parse();
+			if (!$msg->exists()) {
+				$msg = wfMessage('protect-fallback', $level)->parse();
 			}
-			return wfMessage('protect-fallback', $level)->parse();
 		}
+		if ($canUnsetOnly) {
+			$msg = wfMessage('preserve-wrapunsetonly', $msg->parse());
+		}
+		return $msg->parse();
 	}
 
 	protected function alterForm(HTMLForm $form) {
@@ -74,7 +175,13 @@ class PreserveAction extends FormAction {
 	}
 
 	public function onSubmit($data) {
-		wfDebugLog('Preserve', 'onSubmit() (' . implode(', ', array_keys($data)) .') = ('.  implode(', ',$data).')');
+		$old = $this->getAllRestrictions();	
+		$new = array_merge($old, $data);
+
+		wfDebugLog('Preserve', 'onSubmit() OLD  (' . implode(', ', array_keys($old)) .') = ('.  implode(', ',$old).')');
+		wfDebugLog('Preserve', 'onSubmit() DATA (' . implode(', ', array_keys($data)) .') = ('.  implode(', ',$data).')');
+		wfDebugLog('Preserve', 'onSubmit() NEW  (' . implode(', ', array_keys($new)) .') = ('.  implode(', ',$new).')');
+
 		// Update the article's restriction field, and leave a log entry.
 		//  array "set of restriction keys"
 		//  array "expiry per restriction type expiration"
@@ -83,7 +190,7 @@ class PreserveAction extends FormAction {
 		//  User "The user updating the restrictions"
 		// return Status::newFatal( 'readonlytext', wfReadOnlyReason() );
 		$cascade = false; // necessary because this parameter is passed by reference
-		return $this->page->doUpdateRestrictions($data, array(), $cascade, 'Preserve', $this->getUser());
+		return $this->page->doUpdateRestrictions($new, array(), $cascade, 'Preserve', $this->getUser());
 	}
 
 	public function onSuccess() {

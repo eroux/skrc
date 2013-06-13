@@ -12,8 +12,9 @@ $messages['en'] = array(
 	'preserve-desc' => 'Enables a regular user to protect resources from other people\'s actions.',
 	'preserve-title' => 'Preserve: $1',
 	'preserve-action' => 'Preserve',
-	'action-preserve' => 'protect this page', // in the sentence "You do not have permission to X"
-	'preserve-header' => '===Protect this resource with the following form.===',
+	'action-preserve' => 'set actions permissions of this page', // in the sentence "You do not have permission to X"
+	'preserve-header' => 'You can preserve this resource using this simple form.',
+	'preserve-wrapunsetonly' => '\'\'\'$1\'\'\'', 
 	'preserve-submit' => 'Save!',
 	'preserve-success' => 'The protection has been saved.',
 	'preserve-section-read' => 'Who can see this page ?',
