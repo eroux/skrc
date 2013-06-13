@@ -78,17 +78,10 @@ class OwnerRight {
 	 * @return array
 	 */
 	public static function getOwnerDoErrors($title, $user, $do, $context) {
-
 		$errors = array();
-
 		if (array_key_exists($do, $context)) {
-			// $do in the $context
-			if ($user->isAllowed($context[$do])) {
-				// $user has bypass right
-			} elseif (self::isOwner($user, $title)) {
-				// $user is the owner
-			} else {
-				// deny
+			// $do in the $context = need to check
+			if ($user->isAnon() || (!$user->isAllowed($context[$do]) && !self::isOwner($user, $title))) {
 				$errors = array(array('only-owner-can', $do));
 			}
 		}
