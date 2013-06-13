@@ -6,20 +6,24 @@ if (!defined('MEDIAWIKI'))
 // Adds the action preserve
 $wgActions['preserve'] = true;
 
+// Visible restrictions in the preserve action form
 if (!isset($wgPreserveRestrictionTypes)) {
-	$wgPreserveRestrictionTypes = true; // true means "= $wgRestrictionTypes" OR array( 'edit', 'upload', ...)
+	$wgPreserveRestrictionTypes = true; // true means "= $wgRestrictionTypes" , or list as an array: "array( 'edit', 'upload', ...)"
 }
 
+// Visible levels in the preserve action form
 if (!isset($wgPreserveRestrictionLevels)) {
-	$wgPreserveRestrictionLevels = true; // true means "= $wgRestrictionLevels" OR array( '', 'autoconfirmed', ...)
+	$wgPreserveRestrictionLevels = true; // true means "= $wgRestrictionLevels" , or list as an array: "array( '', 'autoconfirmed', ...)"
 }
 
+// Show all $wgPreserveRestrictionLevels, or filter according to user rights ?
 if (!isset($wgPreserveShowAllLevels)) {
-	 $wgPreserveShowAllLevels = true; // true OR false
+	 $wgPreserveShowAllLevels = true; // true means 'show all' , false means 'filter'
 }
 
-if (!isset($wgPreserveEnableDisallowedLevels)) {
-	$wgPreserveEnableDisallowedLevels = true; // true OR false OR array ( 'sysop', ...)
+// Allow user to change the restriction level of an action even if he doesn't belong to the group of the current restriction level
+if (!isset($wgPreserveDeselectableLevels)) {
+	$wgPreserveDeselectableLevels = true; // true means 'can change all levels', false means 'forbid if he doesn't belong to current level', or list levels that he can always change as an array: "array ( 'sysop', ...)"
 }
 
 /**

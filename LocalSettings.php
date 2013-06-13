@@ -128,15 +128,16 @@ $wgPreserveRestrictionLevels = array(
 	'acarya',
 	'lama',
 	'vajracarya',
-	'owner', // only the owner of the page
 );
 
 # Sets restriction types available on the preserve action page
 $wgPreserveRestrictionTypes = array ( 'read', 'edit', 'upload');
 
+# Always show all levels
 $wgPreserveShowAllLevels = true;
 
-$wgPreserveEnableDisallowedLevels = false;
+# Users can change a restriction set to 'owner'
+$wgPreserveDeselectableLevels = array('owner');
 
 
 # Grants to page's owner access to the preserve action (and sysops the bypass right)

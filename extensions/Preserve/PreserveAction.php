@@ -29,7 +29,7 @@ class PreserveAction extends FormAction {
 		return '';
 	}
 
-	protected function getSelectableRestrictionLevels() {
+	protected function getAccessibleRestrictionLevels() {
 		if ($this->restrictionLevels == null) {
 
 			global $wgRestrictionLevels, $wgPreserveRestrictionLevels, $wgPreserveShowAllLevels;
@@ -121,23 +121,28 @@ class PreserveAction extends FormAction {
 		$currentLevel = $this->getActionRestriction($action);
 		$fieldDescriptor['default'] = $currentLevel;
 
-		$restrictionLevels = $this->getSelectableRestrictionLevels();
+		$accessibleLevels = $this->getAccessibleRestrictionLevels();
 
-		global $wgPreserveEnableDisallowedLevels;
+		global $wgPreserveDeselectableLevels;
 
-		$currentLevelCanBeSet = in_array($currentLevel, $restrictionLevels);
+		$actionIsEditable = 
+				in_array($currentLevel, $accessibleLevels) 
+				|| $wgPreserveDeselectableLevels === true 
+				|| ( is_array($wgPreserveDeselectableLevels) && in_array($currentLevel, $wgPreserveDeselectableLevels) );
 
-		if ( $currentLevelCanBeSet || ($wgPreserveEnableDisallowedLevels === true) || ( is_array($wgPreserveEnableDisallowedLevels) && in_array($currentLevel, $wgPreserveEnableDisallowedLevels) ) )  {
-			// we add selectable radios for all restriction levels
-			foreach ($restrictionLevels as $level) {
+		if ($actionIsEditable) {
+
+			// adds all accessible restriction levels
+			foreach ($accessibleLevels as $level) {
 				$fieldDescriptor['options'][$this->getRestrictionLevelText($level)] = $level;
 			}
-			if (!$currentLevelCanBeSet) {
-				// we add the current level, which is not displayed by default
+			// if necessary, adds the current level
+			if (!in_array($currentLevel, $accessibleLevels)) {
 				$fieldDescriptor['options'][$this->getRestrictionLevelText($currentLevel, true)] = $currentLevel;
 			}
 
 		} else {
+
 			// we only add one disabled radio
 			$fieldDescriptor['options'][$this->getRestrictionLevelText($currentLevel)] = $currentLevel;
 			$fieldDescriptor['disabled'] = true;
@@ -148,12 +153,12 @@ class PreserveAction extends FormAction {
 	}
 
 	/**
-	 * Prepare the label for a protection selector option
-	 *
+	 * 
 	 * @param string $level A restriction level
-	 * @return string
+	 * @param boolean $canDeselectOnly
+	 * @return string parsed HTML
 	 */
-	protected function getRestrictionLevelText($level, $canUnsetOnly = false) {
+	protected function getRestrictionLevelText($level, $canDeselectOnly = false) {
 		if ($level == '') {
 			$msg = wfMessage('protect-default');
 		} else {
@@ -162,7 +167,7 @@ class PreserveAction extends FormAction {
 				$msg = wfMessage('protect-fallback', $level)->parse();
 			}
 		}
-		if ($canUnsetOnly) {
+		if ($canDeselectOnly) {
 			$msg = wfMessage('preserve-wrapunsetonly', $msg->parse());
 		}
 		return $msg->parse();
