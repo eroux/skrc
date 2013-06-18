@@ -207,3 +207,8 @@ require_once( "$IP/extensions/Preserve/Preserve.php" );
 
 # =[ OwnerRight ]=
 require_once( "$IP/extensions/OwnerRight/OwnerRight.php" );
+
+# =[WidgetsFramework]=
+require_once( "$IP/extensions/WidgetsFramework/WidgetsFramework.php" );
+$wgWFMKMaxWidth = 1000;
+$wgDisqusShortName = 'skrc';
