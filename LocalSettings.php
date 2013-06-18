@@ -16,6 +16,9 @@ $wgExtensionMessagesFiles['LocalSettings'] = __DIR__ . '/LocalSettings.i18n.php'
 $wgSitename = "ShangpaWiki";
 $wgMetaNamespace = "Project";
 
+# Default Timezone
+$wgLocaltimezone = "Europe/Paris";
+
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
 
