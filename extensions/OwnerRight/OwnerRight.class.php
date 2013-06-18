@@ -81,7 +81,7 @@ class OwnerRight {
 		$errors = array();
 		if (array_key_exists($do, $context)) {
 			// $do in the $context = need to check
-			if ($user->isAnon() || (!$user->isAllowed($context[$do]) && !self::isOwner($user, $title))) {
+			if (!$user->isAllowed($context[$do]) && !self::isOwner($user, $title)) {
 				$errors = array(array('only-owner-can', $do));
 			}
 		}
@@ -99,6 +99,9 @@ class OwnerRight {
 		$result = false;
 		if (wfRunHooks('isOwner', array($title, $user, &$result))) {
 			// no hook halts, so makes sure $user is the first revisioner of $title
+			if ($user->isAnon()) {
+				return false;
+			}
 			$firstRevision = $title->getFirstRevision();
 			$owner = $firstRevision ? $firstRevision->getRawUser() : 0; // Fetch revision's user id
 			$result = $owner == $user->getId();
