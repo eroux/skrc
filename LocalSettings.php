@@ -16,6 +16,9 @@ $wgExtensionMessagesFiles['LocalSettings'] = __DIR__ . '/LocalSettings.i18n.php'
 $wgSitename = "ShangpaWiki";
 $wgMetaNamespace = "Project";
 
+# Default Timezone
+$wgLocaltimezone = "Europe/Paris";
+
 ## The relative URL path to the skins directory
 $wgStylePath = "$wgScriptPath/skins";
 
@@ -58,9 +61,9 @@ $wgDefaultSkin = "vector";
 ## appropriate copyright notice / icon. GNU Free Documentation
 ## License and Creative Commons licenses are supported so far.
 $wgRightsPage = "Project:Copyright"; # Set to the title of a wiki page that describes your license/copyright
-$wgRightsUrl = "http://creativecommons.org/licenses/by-nc-sa/3.0/";
+/*$wgRightsUrl = "http://creativecommons.org/licenses/by-nc-sa/3.0/";
 $wgRightsText = "Creative Commons Attribution Non-Commercial Share Alike";
-$wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";
+$wgRightsIcon = "{$wgStylePath}/common/images/cc-by-nc-sa.png";*/
 
 # remove the link to the talk page for non-logged in users, because they won't be able to edit it
 $wgShowIPinHeader = false;

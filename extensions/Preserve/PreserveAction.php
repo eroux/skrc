@@ -114,6 +114,7 @@ class PreserveAction extends FormAction {
 
 		$fieldDescriptor = array(
 			'type' => 'radio',
+			'section' => 'section-'.$action,
 			'label-message' => 'restriction-' . $action,
 			'options' => array()
 		);
@@ -160,16 +161,21 @@ class PreserveAction extends FormAction {
 	 */
 	protected function getRestrictionLevelText($level, $canDeselectOnly = false) {
 		if ($level == '') {
-			$msg = wfMessage('protect-default');
+			$msgKey = 'protect-default';
 		} else {
-			$msg = wfMessage("protect-level-{$level}");
-			if (!$msg->exists()) {
-				$msg = wfMessage('protect-fallback', $level)->parse();
-			}
+			$msgKey = "protect-level-{$level}";
 		}
+		
+		$msg = wfMessage($msgKey);
+		
+		if (!$msg->exists()) {
+			$msg = wfMessage('protect-fallback', $level);
+		}
+		
 		if ($canDeselectOnly) {
 			$msg = wfMessage('preserve-wrapunsetonly', $msg->parse());
 		}
+		
 		return $msg->parse();
 	}
 
