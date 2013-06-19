@@ -22,34 +22,34 @@ if (!isset($wgOwnerCanAlwaysRead)) {
  * CONFIGURATION EXAMPLES
  * 
  * 
- * Add a new restriction level 'beowner' (in the protect form),
+ * Add a new restriction level 'owner' (in the protect form),
  * desginating only the owner of each page,
  * that sysops can bypass
  * 
  *   // Declares the owner level in this extension, with its bypass right
- *   $wgOwnerLevels = array('beowner' => 'besuperowner');
+ *   $wgOwnerLevels = array('owner' => 'superowner');
  * 
  *   // Adds the new level to the protect form
- *   $wgRestrictionLevels[] = 'beowner';
+ *   $wgRestrictionLevels[] = 'owner';
  * 
  *   // Everyone can "be (THE) owner", but this extension now filter this level on each page to the real owner
- *   $wgGroupPermissions['*']['beowner'] = true;
+ *   $wgGroupPermissions['*']['owner'] = true;
  * 
  *   // Sysops bypass
- *   $wgGroupPermissions['sysop']['besuperowner'] = true;
+ *   $wgGroupPermissions['sysop']['superowner'] = true;
  * 
  * 
  * Grant each page's owner the 'protect' right,
  * and sysops can still 'protect' any page
  * 
  *   // Only owner can 'protect', except for users having 'protectany' right
- *   $wgOwnerActions = array('protect' => 'protectany'); 
+ *   $wgOwnerActions = array('preserve' => 'preserveany'); 
  * 
  *   // Everyone can 'protect', but this extension now filter on each page to the real owner
- *   $wgGroupPermissions['*']['protect'] = true;            
+ *   $wgGroupPermissions['*']['preserve'] = true;            
  * 
  *   // Sysops bypass
- *   $wgGroupPermissions['sysop']['protectany'] = true
+ *   $wgGroupPermissions['sysop']['preserveany'] = true
  * 
  */
 
