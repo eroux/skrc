@@ -30,7 +30,7 @@ $wgAdvertisedFeedTypes = array(); // no feed
  *
  * @file
  * @ingroup Extensions
- * @author Seizam SàRL <contact@seizam.com>
+ * @author Yann Missler, Seizam SàRL <contact@seizam.com>
  * @license GNU General Public License version 3 or any later version <http://www.gnu.org/copyleft/gpl.html>
  */
 $wgExtensionCredits['other'][] = array(
@@ -38,7 +38,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'ReadAction',
 	'descriptionmsg' => 'readaction-desc',
 	'version' => 0.1,
-	'author' => array('Seizam SàRL'),
+	'author' => array('Yann Missler', 'Seizam SàRL'),
 	'url' => 'http://atelier.seizam.com',
 );
 

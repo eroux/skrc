@@ -43,13 +43,13 @@ if (!isset($wgOwnerCanAlwaysRead)) {
  * and sysops can still 'protect' any page
  * 
  *   // Only owner can 'protect', except for users having 'protectany' right
- *   $wgOwnerActions = array('preserve' => 'preserveany'); 
+ *   $wgOwnerActions = array('protect' => 'protectany'); 
  * 
  *   // Everyone can 'protect', but this extension now filter on each page to the real owner
- *   $wgGroupPermissions['*']['preserve'] = true;            
+ *   $wgGroupPermissions['*']['protect'] = true;            
  * 
  *   // Sysops bypass
- *   $wgGroupPermissions['sysop']['preserveany'] = true
+ *   $wgGroupPermissions['sysop']['protectany'] = true
  * 
  */
 
@@ -59,7 +59,7 @@ if (!isset($wgOwnerCanAlwaysRead)) {
  * Makes some restriction levels and actions limited to the owner.
  * @file
  * @ingroup Extensions
- * @author Seizam SàRL <contact@seizam.com>
+ * @author Yann Missler, Seizam SàRL <contact@seizam.com>
  * @license GNU General Public License version 3 or any later version <http://www.gnu.org/copyleft/gpl.html>
  */
 $wgExtensionCredits['other'][] = array(
@@ -67,7 +67,7 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'OwnerRight',
 	'descriptionmsg' => 'ownerright-desc',
 	'version' => 0.1,
-	'author' => array('Seizam SàRL'),
+	'author' => array('Yann Missler', 'Seizam SàRL'),
 	'url' => 'http://atelier.seizam.com',
 );
 

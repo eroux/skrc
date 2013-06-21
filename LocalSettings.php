@@ -149,6 +149,10 @@ $wgGroupPermissions['*']['preserve'] = true;
 $wgOwnerActions = array('preserve' => 'preserveany');
 $wgGroupPermissions['sysop']['preserveany'] = true;
 
+# Only owner and sysop can move pages
+$wgOwnerActions = array('move' => 'moveany'); // 'move' right granted by default by MW 
+$wgGroupPermissions['sysop']['moveany'] = true;
+
 
 ## Extensions
 
