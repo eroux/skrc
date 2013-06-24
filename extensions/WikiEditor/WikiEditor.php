@@ -58,6 +58,7 @@ $wgExtensionCredits['other'][] = array(
 );
 $wgAutoloadClasses['WikiEditorHooks'] = dirname( __FILE__ ) . '/WikiEditor.hooks.php';
 $wgExtensionMessagesFiles['WikiEditor'] = dirname( __FILE__ ) . '/WikiEditor.i18n.php';
+$wgExtensionMessagesFiles['WikiEditor-licenses'] = dirname( __FILE__ ) . '/WikiEditor.licenses.i18n.php';
 $wgHooks['EditPage::showEditForm:initial'][] = 'WikiEditorHooks::editPageShowEditFormInitial';
 $wgHooks['GetPreferences'][] = 'WikiEditorHooks::getPreferences';
 $wgHooks['ResourceLoaderGetConfigVars'][] = 'WikiEditorHooks::resourceLoaderGetConfigVars';
@@ -412,6 +413,7 @@ $wgResourceModules += array(
 			'wikieditor-toolbar-help-content-indent-result',
 
 			'licenses',
+			'nolicense',
 			'wikieditor-toolbar-tool-license',
 			'wikieditor-toolbar-tool-license-example',
 			'wikieditor-toolbar-tool-license-default',

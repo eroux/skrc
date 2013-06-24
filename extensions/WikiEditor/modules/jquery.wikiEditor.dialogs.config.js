@@ -11,8 +11,8 @@ $.wikiEditor.modules.dialogs.config = {
 			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'ilink' } )
 			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'file' } )
 			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'reference' } )
+			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'license' } )
 			.wikiEditor( 'removeFromToolbar', { section: 'advanced', group: 'insert', tool: 'table' } )
-			.wikiEditor( 'removeFromToolbar', { section: 'advanced', group: 'insert', tool: 'license' } )
 			.wikiEditor( 'addToToolbar', {
 				section: 'main',
 				group: 'insert',
@@ -47,6 +47,16 @@ $.wikiEditor.modules.dialogs.config = {
 							type: 'dialog',
 							module: 'insert-reference'
 						}
+					},
+					'license': {
+						labelMsg: 'wikieditor-toolbar-tool-license',
+						type: 'button',
+						icon: 'insert-xlink.png',
+						offset: [2, -1942],
+						action: {
+							type: 'dialog',
+							module: 'insert-license'
+						}
 					}
 				}
 			} )
@@ -62,22 +72,6 @@ $.wikiEditor.modules.dialogs.config = {
 						action: {
 							type: 'dialog',
 							module: 'insert-table'
-						}
-					}
-				}
-			} )
-			.wikiEditor( 'addToToolbar', {
-				section: 'advanced',
-				group: 'insert',
-				tools: {
-					'license': {
-						labelMsg: 'wikieditor-toolbar-tool-license',
-						type: 'button',
-						icon: 'insert-xlink.png',
-						offset: [2, -1942],
-						action: {
-							type: 'dialog',
-							module: 'insert-license'
 						}
 					}
 				}
@@ -1107,11 +1101,11 @@ $.wikiEditor.modules.dialogs.config = {
 						// FIXME: Localize 'x'?
 						html: '\
 					<div class="wikieditor-toolbar-dialog-wrapper">\
-					<fieldset><div class="wikieditor-toolbar-license-form">\
+					<fieldset><div class="wikieditor-toolbar-tool-license-form">\
 						<div class="wikieditor-toolbar-field-wrapper">\
-							<label for="wikieditor-toolbar-license-select" rel="wikieditor-toolbar-license-select"></label><br/>\
-							<div class="ui-widget-help" id="wikieditor-toolbar-license-help"></div>\
-							<select type="text" id="wikieditor-toolbar-license-select"></select>\
+							<label for="wikieditor-toolbar-tool-license-select" rel="wikieditor-toolbar-tool-license-select"></label><br/>\
+							<div class="ui-widget-help" id="wikieditor-toolbar-tool-license-help"></div>\
+							<select type="text" id="wikieditor-toolbar-tool-license-select"></select>\
 						</div>\
 					</div></fieldset>\
 					</div>',
@@ -1121,8 +1115,8 @@ $.wikiEditor.modules.dialogs.config = {
 								$(this).text(mw.msg($(this).attr('rel')));
 							});
 							// Init selectbox
-							$('#wikieditor-toolbar-license-select').empty();
-							$('#wikieditor-toolbar-license-select').append($('<option></option>')
+							$('#wikieditor-toolbar-tool-license-select').empty();
+							$('#wikieditor-toolbar-tool-license-select').append($('<option></option>')
 									.attr("selected", "selected")
 									.attr("value", "")
 									.text(mw.msg("wikieditor-toolbar-tool-license-default")));
@@ -1157,13 +1151,13 @@ $.wikiEditor.modules.dialogs.config = {
 											level = level - 1;
 										}
 
-										$('#wikieditor-toolbar-license-select').append($('<option></option>')
+										$('#wikieditor-toolbar-tool-license-select').append($('<option></option>')
 												.attr("value", template)
 												.text(text));
 
 									} else {
 
-										$('#wikieditor-toolbar-license-select').append($('<option></option>')
+										$('#wikieditor-toolbar-tool-license-select').append($('<option></option>')
 												.attr("value", license)
 												.attr("disabled", "disabled")
 												.text("  " + license));
@@ -1178,8 +1172,8 @@ $.wikiEditor.modules.dialogs.config = {
 							dialogClass: 'wikiEditor-toolbar-dialog',
 							width: 590,
 							buttons: {
-								'wikieditor-toolbar-license-insert': function() {
-									var license = $('#wikieditor-toolbar-license-select').val();
+								'wikieditor-toolbar-tool-license-insert': function() {
+									var license = $('#wikieditor-toolbar-tool-license-select').val();
 
 									// Close the dialog
 									$(this).dialog('close');
@@ -1194,10 +1188,10 @@ $.wikiEditor.modules.dialogs.config = {
 									$(this)
 											);
 									// Restore form state
-									$('#wikieditor-toolbar-license-select').val('');
-									$('#wikieditor-toolbar-license-help').html('');
+									$('#wikieditor-toolbar-tool-license-select').val('');
+									$('#wikieditor-toolbar-tool-license-help').html('');
 								},
-								'wikieditor-toolbar-license-cancel': function() {
+								'wikieditor-toolbar-tool-license-cancel': function() {
 									// Clear any saved selection state
 									var context = $(this).data('context');
 									context.fn.restoreCursorAndScrollTop();
@@ -1205,7 +1199,7 @@ $.wikiEditor.modules.dialogs.config = {
 								}
 							},
 							open: function() {
-								$('#wikieditor-toolbar-license-select').focus();
+								$('#wikieditor-toolbar-tool-license-select').focus();
 							}
 						}
 					},
