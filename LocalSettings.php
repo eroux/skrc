@@ -162,11 +162,11 @@ $wgPreserveShowAllLevels = true;
 
 # Grants to page's owner access to the preserve action (and sysops the bypass right)
 $wgGroupPermissions['*']['preserve'] = true;
-$wgOwnerActions = array('preserve' => 'preserveany');
+$wgOwnerActions['preserve'] = 'preserveany';
 $wgGroupPermissions['sysop']['preserveany'] = true;
 
 # Only owner and sysop can move pages
-$wgOwnerActions = array('move' => 'moveany'); // 'move' right granted by default by MW 
+$wgOwnerActions['move'] = 'moveany'; // 'move' right granted by default by MW 
 $wgGroupPermissions['sysop']['moveany'] = true;
 
 
