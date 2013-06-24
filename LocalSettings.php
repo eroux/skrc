@@ -16,6 +16,22 @@ $wgExtensionMessagesFiles['LocalSettings'] = __DIR__ . '/LocalSettings.i18n.php'
 $wgSitename = "ShangpaWiki";
 $wgMetaNamespace = "Project";
 
+# Widget namespace
+define( 'NS_WIDGET', 274 );
+$wgExtraNamespaces[NS_WIDGET] = 'Widget';
+
+# Widget_talk namespace
+define( 'NS_WIDGET_TALK', NS_WIDGET + 1 );
+$wgExtraNamespaces[NS_WIDGET_TALK] = 'Widget_talk';
+
+# I18n namespace
+define( 'NS_I18N', 276 );
+$wgExtraNamespaces[NS_I18N] = 'I18n';
+
+# I18n_talk namespace
+define( 'NS_I18N_TALK', NS_I18N + 1 );
+$wgExtraNamespaces[NS_I18N_TALK] = 'I18n_talk';
+
 # Default Timezone
 $wgLocaltimezone = "Europe/Paris";
 
