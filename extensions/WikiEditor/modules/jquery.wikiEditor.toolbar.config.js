@@ -179,8 +179,8 @@ getDefaultConfig: function() {
 						'license': {
 							'labelMsg': 'wikieditor-toolbar-tool-license',
 							'type': 'button',
-							'icon': 'insert-xlink.png',
-							'offset': [2, -1942],
+							'icon': 'copyleft.png',
+							'offset': [-70, -1942],
 							'filters': [ '#wpTextbox1:not(.toolbar-dialogs)' ],
 							'action': {
 								'type': 'encapsulate',

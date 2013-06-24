@@ -51,8 +51,8 @@ $.wikiEditor.modules.dialogs.config = {
 					'license': {
 						labelMsg: 'wikieditor-toolbar-tool-license',
 						type: 'button',
-						icon: 'insert-xlink.png',
-						offset: [2, -1942],
+						icon: 'copyleft.png',
+						offset: [-70, -1942],
 						action: {
 							type: 'dialog',
 							module: 'insert-license'
