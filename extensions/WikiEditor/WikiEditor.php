@@ -410,6 +410,15 @@ $wgResourceModules += array(
 			'wikieditor-toolbar-help-content-indent-description',
 			'wikieditor-toolbar-help-content-indent-syntax',
 			'wikieditor-toolbar-help-content-indent-result',
+
+			'licenses',
+			'wikieditor-toolbar-tool-license',
+			'wikieditor-toolbar-tool-license-example',
+			'wikieditor-toolbar-tool-license-default',
+			'wikieditor-toolbar-tool-license-title',
+			'wikieditor-toolbar-tool-license-select',
+			'wikieditor-toolbar-tool-license-insert',
+			'wikieditor-toolbar-tool-license-cancel',
 		),
 	),
 

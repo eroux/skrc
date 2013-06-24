@@ -12,6 +12,7 @@ $.wikiEditor.modules.dialogs.config = {
 			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'file' } )
 			.wikiEditor( 'removeFromToolbar', { section: 'main', group: 'insert', tool: 'reference' } )
 			.wikiEditor( 'removeFromToolbar', { section: 'advanced', group: 'insert', tool: 'table' } )
+			.wikiEditor( 'removeFromToolbar', { section: 'advanced', group: 'insert', tool: 'license' } )
 			.wikiEditor( 'addToToolbar', {
 				section: 'main',
 				group: 'insert',
@@ -61,6 +62,22 @@ $.wikiEditor.modules.dialogs.config = {
 						action: {
 							type: 'dialog',
 							module: 'insert-table'
+						}
+					}
+				}
+			} )
+			.wikiEditor( 'addToToolbar', {
+				section: 'advanced',
+				group: 'insert',
+				tools: {
+					'license': {
+						labelMsg: 'wikieditor-toolbar-tool-license',
+						type: 'button',
+						icon: 'insert-xlink.png',
+						offset: [2, -1942],
+						action: {
+							type: 'dialog',
+							module: 'insert-license'
 						}
 					}
 				}
@@ -1081,6 +1098,119 @@ $.wikiEditor.modules.dialogs.config = {
 					}
 				}
 			},
+
+// =========================
+
+					'insert-license': {
+						titleMsg: 'wikieditor-toolbar-tool-license-title',
+						id: 'wikieditor-toolbar-license-dialog',
+						// FIXME: Localize 'x'?
+						html: '\
+					<div class="wikieditor-toolbar-dialog-wrapper">\
+					<fieldset><div class="wikieditor-toolbar-license-form">\
+						<div class="wikieditor-toolbar-field-wrapper">\
+							<label for="wikieditor-toolbar-license-select" rel="wikieditor-toolbar-license-select"></label><br/>\
+							<div class="ui-widget-help" id="wikieditor-toolbar-license-help"></div>\
+							<select type="text" id="wikieditor-toolbar-license-select"></select>\
+						</div>\
+					</div></fieldset>\
+					</div>',
+						init: function() {
+							// Insert translated strings into labels
+							$(this).find('[rel]').each(function() {
+								$(this).text(mw.msg($(this).attr('rel')));
+							});
+							// Init selectbox
+							$('#wikieditor-toolbar-license-select').empty();
+							$('#wikieditor-toolbar-license-select').append($('<option></option>')
+									.attr("selected", "selected")
+									.attr("value", "")
+									.text(mw.msg("wikieditor-toolbar-tool-license-default")));
+							// Parse, setup and store licences list
+
+							var licenses = mw.msg('licenses');
+							licenses = licenses.split('\n');
+
+							$.each(licenses, function(key, license) {
+
+								if (license.substr(0, 1) === '*') {
+									// trim stars
+									var level = -1;
+									while ((license.length > 0) && (license.substr(0, 1) === '*')) {
+										license = license.substr(1); // trim first star
+										level = level + 1;
+									}
+
+									// trim spaces
+									while ((license.length > 0) && (license.substr(0, 1) === ' ')) {
+										license = license.substr(1);
+									}
+
+									var pos = license.indexOf('|');
+
+									if (pos >= 0) {
+										var template = license.substr(0, pos);
+										var text = license.substr(pos + 1);
+
+										while (level > 0) {
+											text = "\xa0\xa0" + text;
+											level = level - 1;
+										}
+
+										$('#wikieditor-toolbar-license-select').append($('<option></option>')
+												.attr("value", template)
+												.text(text));
+
+									} else {
+
+										$('#wikieditor-toolbar-license-select').append($('<option></option>')
+												.attr("value", license)
+												.attr("disabled", "disabled")
+												.text("  " + license));
+
+									}
+
+								}
+							});
+						},
+						dialog: {
+							resizable: false,
+							dialogClass: 'wikiEditor-toolbar-dialog',
+							width: 590,
+							buttons: {
+								'wikieditor-toolbar-license-insert': function() {
+									var license = $('#wikieditor-toolbar-license-select').val();
+
+									// Close the dialog
+									$(this).dialog('close');
+									$.wikiEditor.modules.toolbar.fn.doAction(
+											$(this).data('context'),
+											{
+												type: 'replace',
+												options: {
+													pre: '{{' + license + '}}'
+												}
+											},
+									$(this)
+											);
+									// Restore form state
+									$('#wikieditor-toolbar-license-select').val('');
+									$('#wikieditor-toolbar-license-help').html('');
+								},
+								'wikieditor-toolbar-license-cancel': function() {
+									// Clear any saved selection state
+									var context = $(this).data('context');
+									context.fn.restoreCursorAndScrollTop();
+									$(this).dialog('close');
+								}
+							},
+							open: function() {
+								$('#wikieditor-toolbar-license-select').focus();
+							}
+						}
+					},
+// =========================
+
 			'search-and-replace': {
 				'browsers': {
 					// Left-to-right languages

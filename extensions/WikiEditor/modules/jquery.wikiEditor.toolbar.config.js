@@ -476,6 +476,22 @@ getDefaultConfig: function() {
 									'ownline': true
 								}
 							}
+						},
+						'license': {
+							'labelMsg': 'wikieditor-toolbar-tool-license',
+							'type': 'button',
+							'icon': 'insert-xlink.png',
+							'offset': [2, -1942],
+							'filters': [ '#wpTextbox1:not(.toolbar-dialogs)' ],
+							'action': {
+								'type': 'encapsulate',
+								'options': {
+									'pre': "{{",
+									'periMsg': 'wikieditor-toolbar-tool-license-example',
+									'post': "}}",
+									'ownline': true
+								}
+							}
 						}
 					}
 				}
