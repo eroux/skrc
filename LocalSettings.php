@@ -195,11 +195,13 @@ require_once( "$IP/extensions/Poem/Poem.php" );
 
 # Advanced skin features
 require_once( "$IP/extensions/Vector/Vector.php" );
+$wgVectorUseIconWatch = true;
 
  
 /**
  * Advanced editing interface
  * @warning The extension has been patched to add the license selection for SKRC
+ * @todo put patch into separated extension
  */
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 $wgWikiEditorFeatures['toolbar']['global'] = true;
@@ -237,3 +239,4 @@ require_once( "$IP/extensions/OwnerRight/OwnerRight.php" );
 require_once( "$IP/extensions/WidgetsFramework/WidgetsFramework.php" );
 $wgWFMKMaxWidth = 1000;
 $wgDisqusShortName = 'skrc';
+
