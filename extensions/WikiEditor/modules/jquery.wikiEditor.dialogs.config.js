@@ -1104,7 +1104,7 @@ $.wikiEditor.modules.dialogs.config = {
 					<fieldset><div class="wikieditor-toolbar-tool-license-form">\
 						<div class="wikieditor-toolbar-field-wrapper">\
 							<label for="wikieditor-toolbar-tool-license-select" rel="wikieditor-toolbar-tool-license-select"></label><br/>\
-							<div class="ui-widget-help" id="wikieditor-toolbar-tool-license-help"></div>\
+							<div style="float:right" class="ui-widget-help" id="wikieditor-toolbar-tool-license-help"></div>\
 							<select type="text" id="wikieditor-toolbar-tool-license-select"></select>\
 						</div>\
 					</div></fieldset>\
@@ -1112,8 +1112,9 @@ $.wikiEditor.modules.dialogs.config = {
 						init: function() {
 							// Insert translated strings into labels
 							$(this).find('[rel]').each(function() {
-								$(this).html(mw.message($(this).attr('rel')).parse());
+								$(this).text(mw.message($(this).attr('rel')));
 							});
+							$('#wikieditor-toolbar-tool-license-help').html(mw.message('wikieditor-toolbar-tool-license-help').parse());
 							// Init selectbox
 							$('#wikieditor-toolbar-tool-license-select').empty();
 							$('#wikieditor-toolbar-tool-license-select').append($('<option></option>')
@@ -1189,7 +1190,6 @@ $.wikiEditor.modules.dialogs.config = {
 											);
 									// Restore form state
 									$('#wikieditor-toolbar-tool-license-select').val('');
-									$('#wikieditor-toolbar-tool-license-help').html('');
 								},
 								'wikieditor-toolbar-tool-license-cancel': function() {
 									// Clear any saved selection state
