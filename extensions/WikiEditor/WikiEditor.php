@@ -421,6 +421,7 @@ $wgResourceModules += array(
 			'wikieditor-toolbar-tool-license-select',
 			'wikieditor-toolbar-tool-license-insert',
 			'wikieditor-toolbar-tool-license-cancel',
+			'wikieditor-toolbar-tool-license-help'
 		),
 	),
 
