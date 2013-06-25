@@ -196,7 +196,11 @@ require_once( "$IP/extensions/Poem/Poem.php" );
 # Advanced skin features
 require_once( "$IP/extensions/Vector/Vector.php" );
 
-# Advanced editing interface
+ 
+/**
+ * Advanced editing interface
+ * @warning The extension has been patched to add the license selection for SKRC
+ */
 require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
 $wgWikiEditorFeatures['toolbar']['global'] = true;
 $wgWikiEditorFeatures['toolbar']['user'] = false;
