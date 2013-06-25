@@ -1112,7 +1112,7 @@ $.wikiEditor.modules.dialogs.config = {
 						init: function() {
 							// Insert translated strings into labels
 							$(this).find('[rel]').each(function() {
-								$(this).text(mw.msg($(this).attr('rel')));
+								$(this).html(mw.message($(this).attr('rel')).parse());
 							});
 							// Init selectbox
 							$('#wikieditor-toolbar-tool-license-select').empty();

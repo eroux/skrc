@@ -10,7 +10,7 @@ $messages['en'] = array(
 	'wikieditor-toolbar-tool-license-example' => 'License Template',
 	'wikieditor-toolbar-tool-license-default' => '{{int:nolicense}}',
 	'wikieditor-toolbar-tool-license-title' => 'Insert license',
-	'wikieditor-toolbar-tool-license-select' => 'License type:',
+	'wikieditor-toolbar-tool-license-select' => 'License type (see [[Help:Licenses]]):',
 	'wikieditor-toolbar-tool-license-insert' => 'Insert license',
 	'wikieditor-toolbar-tool-license-cancel' => 'Cancel',
 );
@@ -27,7 +27,7 @@ $messages['qqq'] = array(
 $messages['fr'] = array(
 	'wikieditor-toolbar-tool-license' => 'Licence',
 	'wikieditor-toolbar-tool-license-example' => 'Modèle de license',
-	'wikieditor-toolbar-tool-license-title' => 'Insérer une licence',
+	'wikieditor-toolbar-tool-license-title' => 'Insérer une licence (voir [[Help:Licenses]]);',
 	'wikieditor-toolbar-tool-license-select' => 'Type de licence :',
 	'wikieditor-toolbar-tool-license-insert' => 'Insérer la licence',
 	'wikieditor-toolbar-tool-license-cancel' => 'Annuler',
