@@ -187,6 +187,9 @@ require_once( "$IP/extensions/ParserFunctions/ParserFunctions.php" );
 # Pdf Handler
 require_once( "$IP/extensions/PdfHandler/PdfHandler.php" );
 
+# ImageMap Handler
+require_once( "$IP/extensions/ImageMap/ImageMap.php" );
+
 # <poem> tag
 require_once( "$IP/extensions/Poem/Poem.php" );
 
