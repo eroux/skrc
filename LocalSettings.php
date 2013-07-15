@@ -247,3 +247,22 @@ require_once( "$IP/extensions/Scribunto/Scribunto.php" );
 $wgScribuntoDefaultEngine = 'luastandalone';
 
 $wgNamespaceProtection[NS_MODULE] = array( 'editinterface' );
+
+# Allowing several extensions:
+#  - svg is used for some images in Wikipedia (useful for importing pages)
+#  - pdf will be used for practice texts
+#  - ogg might be useful
+#  - mp3 seems the best supported audio format
+$wgFileExtensions = array_merge( $wgFileExtensions, array( 'svg', 'pdf', 'ogg', 'mp3' ) );
+
+# Adviced by http://www.mediawiki.org/wiki/Manual:Image_administration#SVG
+$wgAllowTitlesInSVG = true;
+
+# Rendering is better in inkscape than in ImageMagick according to 
+# http://www.mediawiki.org/wiki/Manual:Image_administration#SVG
+$wgSVGConverter = 'inkscape' ;
+
+# MediaWiki seems to allow too few memory for external programe, which leads to errors
+# when converting svg files or large image files. The following line fixes this.
+# Found it on https://blog.breadncup.com/2009/12/01/thumbnail-image-memory-allocation-error-in-mediawiki/
+$wgMaxShellMemory = 524288;
