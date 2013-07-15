@@ -245,3 +245,5 @@ $wgDisqusShortName = 'skrc';
 
 require_once( "$IP/extensions/Scribunto/Scribunto.php" );
 $wgScribuntoDefaultEngine = 'luastandalone';
+
+$wgNamespaceProtection[NS_MODULE] = array( 'editinterface' );
